@@ -13,6 +13,7 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('roles')->truncate();
         DB::table('roles')->insert(
             array(
                 array('name' => 'Spital', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()),

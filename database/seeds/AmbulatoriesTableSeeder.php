@@ -13,6 +13,7 @@ class AmbulatoriesTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('ambulatories')->truncate();
         DB::table('ambulatories')->insert(
             array(
                 array('name' => 'Anatomie patologica', 'active' => 1,'created_at' => Carbon::now(), 'updated_at' => Carbon::now()),

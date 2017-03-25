@@ -13,6 +13,7 @@ class SpecialitiesTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('specialities')->truncate();
         DB::table('specialities')->insert(
             array(
                 array('name' => 'Anestezie si terapie intensiva', 'active' => 1,'created_at' => Carbon::now(), 'updated_at' => Carbon::now()),
