@@ -30,6 +30,8 @@ class CreateHospitalsTable extends Migration
             $table->integer('active')->default(1); 
             $table->softDeletes();
             $table->timestamps();
+            
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
