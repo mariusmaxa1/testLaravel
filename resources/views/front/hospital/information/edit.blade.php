@@ -10,45 +10,45 @@
             {{ Form::text('name', null, array('class' => 'form-control', 'placeholder' => 'Denumire spital','id'=>'name')) }}
         </div>
         <div class="input-group">
-            <label for="country">Judet:</label>
-            <input type="text" class="form-control" id="country" name="country">
+            {{ Form::label('county', 'Judet') }}
+            {{ Form::text('county', null, array('class' => 'form-control', 'placeholder' => 'Judet','id'=>'county')) }}
         </div>
         <div class="input-group">
-            <label for="city">Localitate:</label>
-            <input type="text" class="form-control" id="city" name="city">
+            {{ Form::label('city', 'Localitate') }}
+            {{ Form::text('city', null, array('class' => 'form-control', 'placeholder' => 'Localitate','id'=>'city')) }}
         </div>
         <div class="input-group">
-            <label for="classification">Clasificare:</label>
-            <input type="text" class="form-control" id="classification" name="classification">
+            {{ Form::label('classification', 'Clasificare') }}
+            {{ Form::text('classification', null, array('class' => 'form-control', 'placeholder' => 'Clasificare','id'=>'classification')) }}
         </div>
         <div class="input-group">
-            <label for="address">Adresa spital:</label>
-            <input type="text" class="form-control" id="address" name="address">
+            {{ Form::label('address', 'Adresa spital') }}
+            {{ Form::text('address', null, array('class' => 'form-control', 'placeholder' => 'Adresa spital','id'=>'address')) }}
         </div>
         <div class="input-group">
-            <label for="phone1">Telefon 1:</label>
-            <input type="text" class="form-control" id="phone1" name="phone1">
+            {{ Form::label('phone1', 'Telefon 1') }}
+            {{ Form::text('phone1', null, array('class' => 'form-control', 'placeholder' => 'Telefon 1','id'=>'phone1')) }}
         </div>
         <div class="input-group">
-            <label for="phone2">Telefon 2:</label>
-            <input type="text" class="form-control" id="phone2" name="phone2">
+            {{ Form::label('phone2', 'Telefon 2') }}
+            {{ Form::text('phone2', null, array('class' => 'form-control', 'placeholder' => 'Telefon 2','id'=>'phone2')) }}
         </div>
         <div class="input-group">
-            <label for="phone3">Telefon 3:</label>
-            <input type="text" class="form-control" id="phone3" name="phone3">
+            {{ Form::label('phone3', 'Telefon 3') }}
+            {{ Form::text('phone3', null, array('class' => 'form-control', 'placeholder' => 'Telefon 3','id'=>'phone3')) }}
         </div>
         <div class="input-group">
-            <label for="fax">Fax:</label>
-            <input type="text" class="form-control" id="fax" name="fax">
-        </div>                            
-        <div class="input-group">
-            <label for="website">Website:</label>
-            <input type="text" class="form-control" id="website" name="website">
+            {{ Form::label('fax', 'Fax') }}
+            {{ Form::text('fax', null, array('class' => 'form-control', 'placeholder' => 'Fax','id'=>'fax')) }}
         </div>
-         <div class="input-group">
-            <label for="mail">Mail:</label>
-            <input type="text" class="form-control" id="mail" name="mail">
-        </div>                         
+            <div class="input-group">
+            {{ Form::label('website', 'Website') }}
+            {{ Form::text('website', null, array('class' => 'form-control', 'placeholder' => 'Website','id'=>'website')) }}
+        </div>
+        <div class="input-group">
+            {{ Form::label('mail', 'Mail') }}
+            {{ Form::text('mail', null, array('class' => 'form-control', 'placeholder' => 'Mail','id'=>'mail')) }}
+        </div>                     
         <hr>
         <div class="clearfix">
             <div class="pull-right">
