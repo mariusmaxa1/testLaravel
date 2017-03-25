@@ -1,22 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.front')
+@section('title', 'Informatii Generale')
+@section('right_content')
 
-@section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
+    <h1>Dashboard {{$rolename}}</h1>
 
-                <div class="panel-body">
-                    <div class="col-sm-3">
-                        @include('_partials.front.menu')
-                    </div>
-                    <div class="col-sm-9">
-                        <h1>Dashboard spital</h1>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection
