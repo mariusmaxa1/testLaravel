@@ -18,6 +18,9 @@ class CreateHospitalAmbulatoriesTable extends Migration
             $table->integer('hospital_id')->index()->unsigned()->nullable();
             $table->integer('ambulatory_id')->index()->unsigned()->nullable();
             $table->timestamps();
+            
+            $table->foreign('hospital_id')->references('id')->on('hospitals');
+            $table->foreign('ambulatory_id')->references('id')->on('ambulatories');
         });
     }
 
@@ -28,6 +31,12 @@ class CreateHospitalAmbulatoriesTable extends Migration
      */
     public function down()
     {
+        Schema::table('hospital_ambulatories', function (Blueprint $table) {
+            $table->dropForeign('hospital_id');
+    	});
+        Schema::table('hospital_ambulatories', function (Blueprint $table) {
+            $table->dropForeign('ambulatory_id');
+    	});
         Schema::dropIfExists('hospital_ambulatories');
     }
 }

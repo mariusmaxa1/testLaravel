@@ -16,6 +16,8 @@ class AddRoleIdToUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->integer('role_id')->index()->unsigned()->nullable();
         });
+        
+        $table->foreign('role_id')->references('id')->on('roles');
     }
 
     /**
@@ -25,6 +27,9 @@ class AddRoleIdToUsersTable extends Migration
      */
     public function down()
     {
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign('role_id');
+    	});
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('role_id');
         });

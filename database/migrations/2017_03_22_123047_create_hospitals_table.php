@@ -42,6 +42,9 @@ class CreateHospitalsTable extends Migration
      */
     public function down()
     {
+        Schema::table('hospitals', function (Blueprint $table) {
+            $table->dropForeign('user_id');
+    	});
         Schema::dropIfExists('hospitals');
     }
 }

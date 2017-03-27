@@ -19,6 +19,8 @@ class CreateHospitalDescriptionsTable extends Migration
             $table->text('description');
             $table->string('photo');
             $table->timestamps();
+            
+            $table->foreign('hospital_id')->references('id')->on('hospitals');
         });
     }
 
@@ -29,6 +31,9 @@ class CreateHospitalDescriptionsTable extends Migration
      */
     public function down()
     {
+        Schema::table('hospital_descriptions', function (Blueprint $table) {
+            $table->dropForeign('hospital_id');
+    	});
         Schema::dropIfExists('hospital_descriptions');
     }
 }

@@ -20,6 +20,8 @@ class CreateHospitalManagersTable extends Migration
             $table->string('description');
             $table->string('photo');
             $table->timestamps();
+            
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -30,6 +32,9 @@ class CreateHospitalManagersTable extends Migration
      */
     public function down()
     {
+        Schema::table('hospital_managers', function (Blueprint $table) {
+            $table->dropForeign('user_id');
+    	});
         Schema::dropIfExists('hospital_managers');
     }
 }
