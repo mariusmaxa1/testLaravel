@@ -31,7 +31,7 @@ class CreateHospitalsTable extends Migration
             $table->softDeletes();
             $table->timestamps();
             
-            $table->foreign('user_id')->references('id')->on('users');
+           // $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -42,9 +42,9 @@ class CreateHospitalsTable extends Migration
      */
     public function down()
     {
-        Schema::table('hospitals', function (Blueprint $table) {
+       /* Schema::table('hospitals', function (Blueprint $table) {
             $table->dropForeign('user_id');
-    	});
+    	});*/
         Schema::dropIfExists('hospitals');
     }
 }

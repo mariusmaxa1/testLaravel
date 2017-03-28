@@ -83,5 +83,6 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/delete.js') }}" type="text/javascript"></script>
 </body>
 </html>

@@ -25,7 +25,7 @@ Route::group(['middleware' => 'admin'], function () {
     });
 });
 
-Route::group(['prefix' => 'profil', 'namespace' => 'Hospital'], function () {
+Route::group(['prefix' => 'profil', 'namespace' => 'Front\Hospital'], function () {
     Route::get('/', [
         'as' => 'hospital.dashboard.index',
         'uses' => 'DashboardController@getIndex',
@@ -115,5 +115,122 @@ Route::group(['prefix' => 'profil', 'namespace' => 'Hospital'], function () {
                 'as' => 'hospital.manager.update',
                 'uses' => 'HospitalManagerController@update',
         ]);
+    });
+    
+    Route::group(['prefix' => 'anunturi', '_active_menu' => 'news'], function () {
+        Route::get('/', [
+            'as' => 'hospital.news.index',
+            'uses' => 'HospitalNewsController@index'
+        ]);
+        
+        Route::get('/create', [
+                'as' => 'hospital.news.create',
+                'uses' => 'HospitalNewsController@create',
+        ]);
+        
+        Route::post('/store', [
+                'as' => 'hospital.news.store',
+                'uses' => 'HospitalNewsController@store',
+        ]);
+        
+        Route::group(['prefix' => '{newsId}', 'where' => ['newsId' => '[0-9]+']], function () {
+            Route::get('/show', [
+                'as' => 'hospital.news.show',
+                'uses' => 'HospitalNewsController@show',
+            ]);
+     
+            Route::get('/edit', [
+                    'as' => 'hospital.news.edit',
+                    'uses' => 'HospitalNewsController@edit',
+            ]);
+
+            Route::post('/update', [
+                    'as' => 'hospital.news.update',
+                    'uses' => 'HospitalNewsController@update',
+            ]);
+
+            Route::get('/delete', [
+                    'as' => 'hospital.news.delete',
+                    'uses' => 'HospitalNewsController@delete',
+            ]);              
+        });
+    });
+    
+    Route::group(['prefix' => 'medici', '_active_menu' => 'doctors'], function () {
+        Route::get('/', [
+            'as' => 'hospital.doctors.index',
+            'uses' => 'HospitalDoctorsController@index'
+        ]);
+        
+        Route::get('/create', [
+                'as' => 'hospital.doctors.create',
+                'uses' => 'HospitalDoctorsController@create',
+        ]);
+        
+        Route::post('/store', [
+                'as' => 'hospital.doctors.store',
+                'uses' => 'HospitalDoctorsController@store',
+        ]);
+        
+        Route::group(['prefix' => '{doctorId}', 'where' => ['doctorId' => '[0-9]+']], function () {
+            Route::get('/show', [
+                'as' => 'hospital.doctors.show',
+                'uses' => 'HospitalDoctorsController@show',
+            ]);
+     
+            Route::get('/edit', [
+                    'as' => 'hospital.doctors.edit',
+                    'uses' => 'HospitalDoctorsController@edit',
+            ]);
+
+            Route::post('/update', [
+                    'as' => 'hospital.doctors.update',
+                    'uses' => 'HospitalDoctorsController@update',
+            ]);
+
+            Route::get('/delete', [
+                    'as' => 'hospital.doctors.delete',
+                    'uses' => 'HospitalDoctorsController@delete',
+            ]);              
+        });
+    });
+    
+    Route::group(['prefix' => 'indicatori', '_active_menu' => 'indicators'], function () {
+        Route::get('/', [
+            'as' => 'hospital.indicators.index',
+            'uses' => 'HospitalIndicatorsController@index'
+        ]);
+        
+        Route::get('/create', [
+                'as' => 'hospital.indicators.create',
+                'uses' => 'HospitalIndicatorsIdController@create',
+        ]);
+        
+        Route::post('/store', [
+                'as' => 'hospital.indicators.store',
+                'uses' => 'HospitalndicatorsController@store',
+        ]);
+        
+        Route::group(['prefix' => '{indicatorId}', 'where' => ['indicatorId' => '[0-9]+']], function () {
+            Route::get('/show', [
+                'as' => 'hospital.indicators.show',
+                'uses' => 'HospitalndicatorsController@show',
+            ]);
+     
+            Route::get('/edit', [
+                    'as' => 'hospital.indicators.edit',
+                    'uses' => 'HospitalndicatorsController@edit',
+            ]);
+
+            Route::post('/update', [
+                    'as' => 'hospital.indicators.update',
+                    'uses' => 'HospitalndicatorsController@update',
+            ]);
+
+            Route::get('/delete', [
+                    'as' => 'hospital.indicators.delete',
+                    'uses' => 'HospitalndicatorsController@delete',
+            ]);              
+        });
     });
 });

@@ -16,15 +16,15 @@ class RolesTableSeeder extends Seeder
         DB::table('roles')->truncate();
         DB::table('roles')->insert(
             array(
-                array('name' => 'Spital', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()),
-                array('name' => 'Farmacie', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()),
-                array('name' => 'Medic de familie', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()),
-                array('name' => 'Clinica privata', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()),
-                array('name' => 'Medic specilist', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()),
-                array('name' => 'Laboratoar de analiza', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()),
-                array('name' => 'Stomatologie', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()),
-                array('name' => 'Pacient', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()),
-                array('name' => 'Admin', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()),
+                array('name' => 'Spital', 'alias' => 'hospital', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()),
+                array('name' => 'Farmacie', 'alias' => 'default', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()),
+                array('name' => 'Medic de familie', 'alias' => 'default', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()),
+                array('name' => 'Clinica privata', 'alias' => 'default', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()),
+                array('name' => 'Medic specilist', 'alias' => 'default', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()),
+                array('name' => 'Laboratoar de analiza', 'alias' => 'default', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()),
+                array('name' => 'Stomatologie', 'alias' => 'default', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()),
+                array('name' => 'Pacient', 'alias' => 'patient', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()),
+                array('name' => 'Admin', 'alias' => 'admin','created_at' => Carbon::now(), 'updated_at' => Carbon::now()),
         ));
     }
 }

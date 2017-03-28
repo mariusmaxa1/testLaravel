@@ -4,10 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class HospitalSpecialities extends Model
+class HospitalDoctors extends Model
 {
     protected $fillable = [
-        'hospital_id', 'speciality_id'
+        'hospital_id'
     ];
-    
 }

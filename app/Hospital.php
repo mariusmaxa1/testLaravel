@@ -31,12 +31,24 @@ class Hospital extends Model
     
     public function specialities()
     {
-        return $this->belongsToMany('App\Specialities');
+        return $this->belongsToMany('App\Specialities', 'hospital_specialities', 'hospital_id' ,'speciality_id');
     }
     
     public function ambulatories()
     {
         return $this->belongsToMany('App\Ambulatory', 'hospital_ambulatories');
+    }
+    
+    public function news(){
+        return $this->hasMany('App\HospitalNews');
+    }
+    
+    public function doctors(){
+        return $this->hasMany('App\HospitalDoctors');
+    }
+    
+    public function indicators(){
+        return $this->hasMany('App\HospitalIndicators');
     }
    
 }

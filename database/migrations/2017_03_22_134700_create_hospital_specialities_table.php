@@ -19,8 +19,8 @@ class CreateHospitalSpecialitiesTable extends Migration
             $table->integer('speciality_id')->index()->unsigned()->nullable();
             $table->timestamps();
             
-            $table->foreign('hospital_id')->references('id')->on('hospitals');
-            $table->foreign('speciality_id')->references('id')->on('specialities');
+           /* $table->foreign('hospital_id')->references('id')->on('hospitals');
+            $table->foreign('speciality_id')->references('id')->on('specialities');*/
         });
     }
 
@@ -31,12 +31,12 @@ class CreateHospitalSpecialitiesTable extends Migration
      */
     public function down()
     {
-        Schema::table('hospital_specialities', function (Blueprint $table) {
+        /*Schema::table('hospital_specialities', function (Blueprint $table) {
             $table->dropForeign('hospital_id');
     	});
         Schema::table('hospital_specialities', function (Blueprint $table) {
             $table->dropForeign('speciality_id');
-    	});
+    	});*/
         Schema::dropIfExists('hospital_specialities');
     }
 }

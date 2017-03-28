@@ -6,7 +6,7 @@
     {!! Form::model($hospitalAmbulatories, array('route' => array('hospital.ambulatory.update'), 'id' => 'edit_hospital_ambulatory_form', 'method' => 'POST')) !!}
     {!! Form::token() !!}
         @foreach($ambulatories as $ambulatory)
-            {{ Form::checkbox('ambulatory_id[]',  $ambulatory->id ) }} {{ $ambulatory->name }}<br>      
+            {{ Form::checkbox('ambulatory_id[]',  $ambulatory->id,in_array($ambulatory->id, $hospitalAmbulatoriesSelected) ) }} {{ $ambulatory->name }}<br>      
          @endforeach         
         <hr>
         <div class="clearfix">

@@ -24,6 +24,16 @@ class TestsTableSeeder extends Seeder
                     'updated_at' => Carbon::now()),
         ));
         
+        DB::table('users')->insert(
+            array(
+                array('name' => 'Test Account',
+                    'email' => 'farmacie@calitatespitale.ro',
+                    'password' => Hash::make('admin123'), 
+                    'role_id' => 2,
+                    'created_at' => Carbon::now(), 
+                    'updated_at' => Carbon::now()),
+        ));
+        
         DB::table('hospitals')->truncate();
         DB::table('hospitals')->insert(
             array(

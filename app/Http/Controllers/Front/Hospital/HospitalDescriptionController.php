@@ -1,38 +1,52 @@
 <?php
 
-namespace App\Http\Controllers\Hospital;
+namespace App\Http\Controllers\Front\Hospital;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
 use App\HospitalDescription;
+use App\Http\Requests\Front\Hospital\UpdateHospitalDescriptionRequest;
+use Notification;
 
 class HospitalDescriptionController extends Controller
 {
-    public function getIndex()
+    public function index()
     {
         $hospital = Auth::user()->hospital;
 
-        $descriptionHospital = HospitalDescription::findOrFail($hospital->id);
+        $hospitalDescription = HospitalDescription::findOrFail($hospital->id);
       
         return view('front.hospital.hospitalDescription.index', [
-            'descriptionHospital' => $descriptionHospital
+            'hospitalDescription' => $hospitalDescription
         ]);
     }
     
-    public function getEdit()
+    public function edit()
     {
         $hospital = Auth::user()->hospital;
 
-        $descriptionHospital = HospitalDescription::findOrFail($params->id);
+        $hospitalDescription = HospitalDescription::findOrFail($hospital->id);
       
         return view('front.hospital.hospitalDescription.edit', [
-            'descriptionHospital' => $descriptionHospital
+            'hospitalDescription' => $hospitalDescription
         ]);
     }
     
-    public function postEdit()
+    public function update(UpdateHospitalDescriptionRequest $request)
     {
-        return view('front.hospital.hospitalDescription.index');
+        $hospital = Auth::user()->hospital;
+
+        $hospitalDescription = HospitalDescription::findOrFail($hospital->id);
+
+        $hospitalDescription->fill([
+            'description' => $request->get('description'),
+        ]);
+
+        $hospitalDescription->save();
+
+        Notification::success('Date actualizate cu succes! ');
+        
+        return redirect()->route('hospital.description.index');
     }
 }
