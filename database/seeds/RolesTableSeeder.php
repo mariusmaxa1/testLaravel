@@ -25,6 +25,7 @@ class RolesTableSeeder extends Seeder
                 array('name' => 'Stomatologie', 'alias' => 'default', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()),
                 array('name' => 'Pacient', 'alias' => 'patient', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()),
                 array('name' => 'Admin', 'alias' => 'admin','created_at' => Carbon::now(), 'updated_at' => Carbon::now()),
+                array('name' => 'Ambulanta privata', 'alias' => 'default','created_at' => Carbon::now(), 'updated_at' => Carbon::now()),
         ));
     }
 }

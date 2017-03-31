@@ -14,6 +14,7 @@ class Hospital extends Model
         'name', 
         'county', 
         'city',
+        'classification',
         'address',
         'phone1',
         'phone2',

@@ -57,5 +57,9 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'hospital' =>  \App\Http\Middleware\Hospital::class,
+        'admin' =>  \App\Http\Middleware\Admin::class,
+        'defaultM' =>  \App\Http\Middleware\DefaultM::class,
+        'patient' =>  \App\Http\Middleware\Patient::class,
+        
     ];
 }

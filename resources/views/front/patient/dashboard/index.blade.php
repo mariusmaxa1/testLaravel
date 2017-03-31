@@ -12,7 +12,7 @@
                         @include('_partials.front.menu')
                     </div>
                     <div class="col-sm-9">
-                           <h1>Dashboard pacient</h1>
+                           <h1>Dashboard pacient !</h1>
                     </div>
                 </div>
             </div>

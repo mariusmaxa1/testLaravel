@@ -1,0 +1,3 @@
+{{ $_title }}&nbsp;
+<a class="@if($_sort_by == $_field && $_sort_order == 'asc') text-danger @else text-muted @endif" href="{{ route($_sort_route, ['sort_by' => $_field, 'sort_order' => 'asc']) }}"><i class="fa fa-sort-asc"></i></a>&nbsp;
+<a class="@if($_sort_by == $_field && $_sort_order == 'desc') text-danger @else text-muted @endif" href="{{ route($_sort_route, ['sort_by' => $_field, 'sort_order' => 'desc']) }}"><i class="fa fa-sort-desc"></i></a>
