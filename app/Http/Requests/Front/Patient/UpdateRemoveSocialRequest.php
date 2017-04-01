@@ -22,7 +22,7 @@ class UpdateRemoveSocialRequest extends Request
     public function rules()
     {
         return [
-            'social_id' => 'required|exists:social,id',
+            'social_id' => 'required|exists:users_socials,id',
         ];
     }
 }

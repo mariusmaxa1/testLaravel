@@ -12,7 +12,7 @@ class UsersSocial extends Model
      *
      * @var string
      */
-    protected $table = 'social';
+    //protected $table = 'social';
     
     
     protected $fillable = [
