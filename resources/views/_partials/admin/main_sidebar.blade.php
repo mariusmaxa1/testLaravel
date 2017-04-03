@@ -5,6 +5,8 @@
             <li @if(isset($_active_menu) && $_active_menu == 'dashboard') class="active" @endif ><a href="{{ route('admin.dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
             <li @if(isset($_active_menu) && $_active_menu == 'hospitals') class="active" @endif ><a href="{{ route('admin.hospitals.index') }}"><i class="fa fa-hospital-o"></i> <span>Spitale</span></a></li>
             <li @if(isset($_active_menu) && $_active_menu == 'users') class="active" @endif ><a href="{{ route('admin.users.index') }}"><i class="fa fa-users"></i> <span>Useri</span></a></li>
+            <li @if(isset($_active_menu) && $_active_menu == 'ambulatories') class="active" @endif ><a href="{{ route('admin.ambulatories.index') }}"><i class="fa fa-plus-square"></i> <span>Ambulatorii</span></a></li>
+            <li @if(isset($_active_menu) && $_active_menu == 'specialities') class="active" @endif ><a href="{{ route('admin.specialities.index') }}"><i class="fa fa-heartbeat"></i> <span>Specilitati</span></a></li>
 
         </ul>
         <ul class="sidebar-menu">

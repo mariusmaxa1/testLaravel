@@ -38,7 +38,7 @@ class HospitalsController extends Controller
         if (!is_null($query)) {
             $hospitals = $hospitals
                 ->where('name', 'like', '%'.$query.'%')
-                ->orWhere('classification', $query)
+                ->orWhere('classification', 'like', '%'.$query.'%')
 		->orWhere('county', $query);
         }
 
@@ -149,14 +149,23 @@ class HospitalsController extends Controller
      * @param int $userId User id to update.
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateHospitalsRequest $request, $hospitalId)
+    public function update(StoreHospitalRequest $request, $hospitalId)
     {
-        $hospital = Hospitals::findOrFail($hospitalId);
+        $hospital = Hospital::findOrFail($hospitalId);
 
         $hospital->fill([
-            'denumire_spital' => $request->get('denumire_spital'),
-            'judet' => $request->get('judet'),
-            'clasificare' => $request->get('clasificare'),
+            'name' => $request->get('name'),
+            'classification' => $request->get('classification'),
+            'county' => $request->get('county'),
+            'city' => $request->get('city'),
+            'address' => $request->get('address'),
+            'phone1' => $request->get('phone1'),
+            'phone2' => $request->get('phone2'),
+            'phone3' => $request->get('phone3'),
+            'fax' => $request->get('fax'),
+            'website' => $request->get('website'),
+            'mail' => $request->get('mail'),
+            'active' => (bool) $request->get('active'),
         ]);
 
         $hospital->save();
@@ -197,25 +206,5 @@ class HospitalsController extends Controller
         }
 
         return redirect()->back();
-    }
-
-    /**
-     * Delete user social profile.
-     *
-     * @param $userId
-     * @param $socialId
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function getSocialDelete($userId, $socialId)
-    {
-        $user = User::findOrFail($userId);
-
-        $social = $user->social()->findOrFail($socialId);
-
-        $social->delete();
-
-        Notification::success('User social profile removed successfully.');
-
-        return redirect()->route('admin.users.show', $user->id);
     }
 }

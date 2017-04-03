@@ -14,7 +14,7 @@
                         <a href="{{ route('admin.users.create') }}" class="btn btn-box-tool pull-right" data-toggle="tooltip" title="Create" data-widget="chat-pane-toggle" data-original-title="Create"><i class="fa fa-plus"></i> Create</a>
                         <form class="form-horizontal" method="GET" action="{{ route('admin.users.index') }}">
                             <div class="input-group">
-                                <input type="text" name="query" class="form-control input-sm pull-right" style="width: 180px;" placeholder="Search by name, email, role..." value="{{ $query }}">
+                                <input type="text" name="query" class="form-control input-sm pull-right" style="width: 180px;" placeholder="Search by name, email..." value="{{ $query }}">
                                 <div class="input-group-btn">
                                     <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
                                 </div>
@@ -40,7 +40,7 @@
                                     <td>{{ $user->id }}</td>
                                     <td><a href="{{ route('admin.users.show', $user->id) }}">{{ $user->name }}</a></td>
                                     <td>{{ $user->email }}</td>
-                                    <td>{{ $user->role->alias }}</td>
+                                    <td>{{ $user->role->name }}</td>
                                     <td>
                                         @if(is_null($user->password))
                                             <label class="label label-info">no password</label>
@@ -67,7 +67,7 @@
                     @endif
                 @else
                     <div class="box-body">
-                        <div class="alert alert-info">Users list is empty.</div>
+                        <div class="alert alert-info">Lista de useri este goala.</div>
                     </div>
                 @endif
             </div>

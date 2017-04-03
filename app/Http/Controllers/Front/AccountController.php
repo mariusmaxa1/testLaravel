@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Front\Patient;
+namespace App\Http\Controllers\Front;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -41,6 +41,9 @@ class AccountController extends Controller
     public function edit()
     {      
         $user = Auth::user();
+        
+        $roleAlias = Auth::user()->role->alias;
+        
         $social = [];
         if ($user->social != null ) {
             foreach ($user->social as $socialAccount) {               
@@ -48,11 +51,24 @@ class AccountController extends Controller
             }           
         }
 
+        if ($roleAlias == "hospital") {
+            return view('front.hospital.account.edit', [
+                'user' => $user,
+            ]);           
+        }
         
-        return view('front.patient.account.edit', [
-            'user' => $user,
-            'social' => $social,
-        ]);
+        if ($roleAlias == "default") {
+            return view('front.default.account.edit', [
+                'user' => $user,
+            ]);           
+        }
+        
+        if ($roleAlias == "patient") {
+            return view('front.patient.account.edit', [
+                'user' => $user,
+                'social' => $social,
+            ]);           
+        }
     }
     
     
@@ -70,10 +86,10 @@ class AccountController extends Controller
 
         if ($user->social()->where('provider', strtolower($provider))->count() >= 1) {
             Notification::info("Asociat! ");
-            return redirect()->route('patient.account.edit');
+            return redirect()->route('account.edit');
         }
 
-        $this->config->set('services.'.$provider.'.redirect', route('patient.update.social.associate.handle', $provider));
+        $this->config->set('services.'.$provider.'.redirect', route('update.social.associate.handle', $provider));
 
         return $this->socialite->driver($provider)->redirect();
     }
@@ -90,7 +106,7 @@ class AccountController extends Controller
 
         $currentSetting = $this->config->get('services.'.$provider.'.redirect');
 
-        $this->config->set('services.'.$provider.'.redirect', route('patient.update.social.associate.handle', $provider));
+        $this->config->set('services.'.$provider.'.redirect', route('update.social.associate.handle', $provider));
 
         $user = Auth::user();
 
@@ -105,7 +121,7 @@ class AccountController extends Controller
 
         $this->config->set('services.'.$provider.'.redirect', $currentSetting);
 
-        return redirect()->route('patient.account.edit');
+        return redirect()->route('account.edit');
     }
     
     /**
@@ -122,7 +138,7 @@ class AccountController extends Controller
 
         Notification::success("Social sters.");
 
-        return redirect()->route('patient.account.edit');
+        return redirect()->route('account.edit');
     }
     
     public function postPassword(UpdatePasswordRequest $request)
@@ -135,7 +151,7 @@ class AccountController extends Controller
 
         Notification::success("Succes! ");
 
-        return redirect()->route('patient.account.edit');
+        return redirect()->route('account.edit');
     }
     
     public function postUser(UpdateUserRequest $request)
@@ -150,6 +166,6 @@ class AccountController extends Controller
 
         Notification::success("Succes! ");
 
-        return redirect()->route('patient.account.edit');
+        return redirect()->route('account.edit');
     }
 }

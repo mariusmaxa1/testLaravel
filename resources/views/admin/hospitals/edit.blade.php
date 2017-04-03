@@ -49,10 +49,10 @@
                                 <label for="classification" class="col-sm-2 control-label">Clasificare</label>
                                 <div class="col-sm-2">
                                     <select name="classification" id="classification" class="form-control">
-                                        <option value="I">I</option>
-                                        <option value="II">II</option>
-                                        <option value="III">III</option>
-                                        <option value="IV">IV</option>
+                                        <option value="I" @if(old('classification', $hospital->classification) == 'I') selected @endif>I</option>
+                                        <option value="II" @if(old('classification', $hospital->classification) == 'II') selected @endif>II</option>
+                                        <option value="III" @if(old('classification', $hospital->classification) == 'III') selected @endif>III</option>
+                                        <option value="IV" @if(old('classification', $hospital->classification) == 'IV') selected @endif>IV</option>
                                     </select>
                                 </div>
                             </div>  

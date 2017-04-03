@@ -93,7 +93,7 @@
                                 </div>
                             </div>
                             <div class="form-group @if($errors->has('mail')) has-error @endif">
-                                <label for="mail" class="col-sm-2 control-label">Fax</label>
+                                <label for="mail" class="col-sm-2 control-label">Mail</label>
                                 <div class="col-sm-10">
                                     <input name="mail" type="text" class="form-control" id="mail" value="{{ old('mail') }}">
                                 </div> 

@@ -6,7 +6,7 @@
     <hr />
     <h2>Date cont</h2>
     
-    {!! Form::model($user, array('route' => array('patient.update.password'), 'id' => 'edit_hospital_account_password_form', 'method' => 'POST')) !!}
+    {!! Form::model($user, array('route' => array('account.update'), 'id' => 'edit_hospital_account_form', 'method' => 'POST')) !!}
     {!! Form::token() !!}
     <div class="input-group">
         {{ Form::label('name', 'Nume si prenume') }}
@@ -20,7 +20,7 @@
         <hr>
     {{ Form::close() }}
     <h2>Schimbare parola</h2>
-    {!! Form::open(array('route' => array('patient.update.password'), 'id' => 'edit_hospital_account_password_form', 'method' => 'POST')) !!}
+    {!! Form::open(array('route' => array('update.password'), 'id' => 'edit_hospital_account_password_form', 'method' => 'POST')) !!}
     {!! Form::token() !!}
         @if(!is_null($user->password))
         <div class="input-group">
@@ -45,7 +45,7 @@
         <hr>
     {{ Form::close() }}
     <h2>Sociale</h2>
-    {!! Form::open(array('route' => array('patient.update.social.remove'), 'id' => 'edit_hospital_account_form', 'method' => 'POST')) !!}
+    {!! Form::open(array('route' => array('update.social.remove'), 'id' => 'edit_hospital_account_form', 'method' => 'POST')) !!}
     {!! Form::token() !!}
     <div class="form-group">
         <label class="col-md-4 control-label">Facebook</label>
@@ -57,7 +57,7 @@
                     <button type="submit" name="social_id" value="{{ $social['facebook']->id }}" class="btn btn-xs btn-danger">&times;</button>
                 </div>
             @else
-                <a href="{{ route('patient.update.social.associate', 'facebook') }}" class="btn facebook-btn">
+                <a href="{{ route('update.social.associate', 'facebook') }}" class="btn facebook-btn">
                     <i class="fa fa-facebook"></i> Asociere cu facebook
                 </a>
             @endif
@@ -74,7 +74,7 @@
                     <button type="submit" name="social_id" value="{{ $social['google']->id }}" class="btn btn-xs btn-danger">&times;</button>
                 </div>
             @else
-                <a href="{{ route('patient.update.social.associate', 'google') }}" class="btn google-btn">
+                <a href="{{ route('update.social.associate', 'google') }}" class="btn google-btn">
                     <i class="fa fa-google-plus"></i>  Asociere cu Google+ 
                 </a>
             @endif

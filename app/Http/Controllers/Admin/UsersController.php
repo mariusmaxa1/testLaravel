@@ -5,6 +5,8 @@ use App\Http\Requests\Admin\StoreUserRequest;
 use App\Http\Requests\Admin\UpdateUserRequest;
 use App\Models\Payment;
 use App\User;
+use App\UsersSocial;
+use App\Role;
 use Illuminate\Http\Request;
 use Notification;
 use Auth;
@@ -39,8 +41,7 @@ class UsersController extends Controller
         if (!is_null($query)) {
             $users = $users
                 ->where('name', 'like', '%'.$query.'%')
-                ->orWhere('email', 'like', '%'.$query.'%')
-                ->orWhere('role', $query);
+                ->orWhere('email', 'like', '%'.$query.'%');
         }
 
         $users = $users->paginate(15);
@@ -77,10 +78,9 @@ class UsersController extends Controller
      */
     public function getCreate()
     {
-        $companies = Company::orderBy('name', 'asc')->get();
-
+        $roles = Role::all();
         return view('admin.users.create', [
-            'companies' => $companies,
+            'roles' => $roles
         ]);
     }
 
@@ -96,14 +96,12 @@ class UsersController extends Controller
             'name' => $request->get('name'),
             'email' => $request->get('email'),
             'password' => bcrypt($request->get('password')),
-            'role' => $request->get('role'),
+            'role_id' => $request->get('role'),
         ]);
 
         $user->save();
 
-        $user->companies()->sync((array) $request->get('companies'));
-
-        Notification::success('User created successfully.');
+        Notification::success('User creat cu succes.');
 
         return redirect()->route('admin.users.show', $user->id);
     }
@@ -120,7 +118,7 @@ class UsersController extends Controller
 
         $user->delete();
 
-        Notification::success('User deleted successfully.');
+        Notification::success('User sters cu succes.');
 
         return redirect()->route('admin.users.index');
     }
@@ -134,12 +132,11 @@ class UsersController extends Controller
     public function getEdit($userId)
     {
         $user = User::findOrFail($userId);
-
-        $companies = Company::orderBy('name', 'asc')->get();
+        $roles = Role::all();
 
         return view('admin.users.edit', [
             'user' => $user,
-            'companies' => $companies,
+            'roles' => $roles,
         ]);
     }
 
@@ -156,7 +153,7 @@ class UsersController extends Controller
 
         $user->fill([
             'name' => $request->get('name'),
-            'role' => $request->get('role'),
+            'role_id' => $request->get('role'),
         ]);
 
         if (strlen($request->get('new_password')) > 0) {
@@ -165,9 +162,7 @@ class UsersController extends Controller
 
         $user->save();
 
-        $user->companies()->sync((array) $request->get('companies'));
-
-        Notification::success('User updated successfully.');
+        Notification::success('User actualizat cu succes.');
 
         return redirect()->route('admin.users.edit', $user->id);
     }
@@ -192,77 +187,5 @@ class UsersController extends Controller
         return redirect()->route('admin.users.show', $user->id);
     }
 
-    /**
-     * Detach company.
-     *
-     * @param $userId
-     * @param $companyId
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function getCompaniesDelete($userId, $companyId)
-    {
-        $user = User::findOrFail($userId);
 
-        $user->companies()->detach($companyId);
-
-        Notification::success('Company removed successfully.');
-
-        return redirect()->route('admin.users.show', $user->id);
-    }
-
-    /**
-     * Display balance overview.
-     *
-     * @param $userId
-     * @return \Illuminate\View\View
-     */
-    public function getBalance($userId)
-    {
-        $user = User::findOrFail($userId);
-
-        $balance = $user->balance;
-
-        $history = $balance->history()->orderBy('created_at', 'desc')->paginate(15);
-
-        return view('admin.users.balance', [
-            'user' => $user,
-            'balance' => $balance,
-            'history' => $history,
-        ]);
-    }
-
-    /**
-     * Update user balance.
-     *
-     * @param ProcessBalanceRequest $request
-     * @param Balance $balance
-     * @param $userId
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function postBalanceProcess(ProcessBalanceRequest $request, Balance $balance, $userId)
-    {
-        $user = User::findOrFail($userId);
-
-        $service = Payment::create([
-            'gateway' => 'admin',
-            'payload' => [
-                'admin_id' => Auth::user()->id,
-                'note' => strlen($request->get('note')) > 0 ? $request->get('note') : null,
-            ]
-        ]);
-
-        $method = $request->get('type') == 'in' ? 'add' : 'charge';
-
-        $balance->{$method}($request->get('amount'), $user->balance, $service);
-
-        if ($request->get('type') == 'in') {
-            $message = 'Balance increased successfully.';
-        } else {
-            $message = 'Balance decreased successfully.';
-        }
-
-        Notification::success($message);
-
-        return redirect()->route('admin.users.balance', $user->id);
-    }
 }

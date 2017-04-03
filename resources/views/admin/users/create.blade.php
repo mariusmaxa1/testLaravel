@@ -43,8 +43,9 @@
                                 <label for="selectRole" class="col-sm-2 control-label">Role</label>
                                 <div class="col-sm-10">
                                     <select name="role" id="selectRole" class="form-control">
-                                        <option value="agency" @if(old('role') == 'agency') selected @endif>agency</option>
-                                        <option value="admin" @if(old('role') == 'admin') selected @endif>admin</option>
+                                        @foreach($roles as $role) 
+                                        <option value="{{ $role->id }}" @if(old('role') == $role->id) selected @endif>{{ $role->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -52,16 +53,6 @@
                                 <label for="inputPassword" class="col-sm-2 control-label">Password</label>
                                 <div class="col-sm-10">
                                     <input name="password" type="password" type="text" class="form-control" id="inputPassword">
-                                </div>
-                            </div>
-                            <div class="form-group @if($errors->has('companies')) has-error @endif">
-                                <label for="selectCompanies" class="col-sm-2 control-label">Companies</label>
-                                <div class="col-sm-10">
-                                    <select name="companies[]" id="selectCompanies" multiple class="form-control">
-                                        @foreach($companies as $company)
-                                            <option value="{{ $company->id }}" @if(in_array($company->id, old('companies', array()))) selected @endif>{{ $company->name }} #{{ $company->id }}</option>
-                                        @endforeach
-                                    </select>
                                 </div>
                             </div>
                             <hr>

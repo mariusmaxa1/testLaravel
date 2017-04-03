@@ -2,7 +2,7 @@
 
 use App\Http\Requests\Request;
 
-class StoreHospitalRequest extends Request
+class UpdateUserRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,13 +23,7 @@ class StoreHospitalRequest extends Request
     {
         return [
             'name' => 'required|max:255',
-            'classification' => 'required|in:I,II,III,IV',
-            'county' => 'required|max:255',
-            'city' => 'required|max:255',
-            'address' => 'required|max:255',
-            'phone1' => 'required|max:255',         
-            'active' => 'required|boolean',
-            'mail' => 'required|max:255',   
+            'new_password' => 'min:6',
         ];
     }
 }

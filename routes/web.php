@@ -31,6 +31,40 @@ Route::group(['prefix' => 'profil', 'namespace' => 'Front'], function () {
         'uses' => 'DashboardController@getIndex',
         '_active_menu' => 'dashboard'
     ]);
+    
+    Route::group(['prefix' => 'contul-meu', '_active_menu' => 'account'], function () {
+            Route::get('/', [
+                'as' => 'account.edit',
+                'uses' => 'AccountController@edit'
+            ]);
+
+            Route::post('/update', [
+                'as' => 'account.update',
+                'uses' => 'AccountController@postUser',
+            ]);
+            
+            Route::post('/password', [
+                'as' => 'update.password',
+                'uses' => 'AccountController@postPassword'
+            ]);
+
+            Route::post('/social/remove', [
+                'as' => 'update.social.remove',
+                'uses' => 'AccountController@postSocialRemove'
+            ]);
+            
+            Route::get('/social/associate/{provider}', [
+                'as' => 'update.social.associate',
+                'uses' => 'AccountController@getSocialAssociate'
+            ]);
+
+            Route::get('/social/associate/{provider}/callback', [
+                'as' => 'update.social.associate.handle',
+                'uses' => 'AccountController@getSocialAssociateHandle'
+            ]);
+
+        });
+    
     Route::group(['middleware' => 'hospital', 'namespace' => 'Hospital'], function () {
         
         Route::group(['prefix' => 'informatii-generale', '_active_menu' => 'information'], function () {
@@ -64,6 +98,11 @@ Route::group(['prefix' => 'profil', 'namespace' => 'Front'], function () {
             Route::post('/update', [
                     'as' => 'hospital.description.update',
                     'uses' => 'HospitalDescriptionController@update',
+            ]);
+            
+            Route::post('/store', [
+                    'as' => 'hospital.description.photo.update',
+                    'uses' => 'HospitalDescriptionController@store',
             ]);
         });
 
@@ -235,18 +274,7 @@ Route::group(['prefix' => 'profil', 'namespace' => 'Front'], function () {
             });
         });
         
-        Route::group(['prefix' => 'contul-meu2', '_active_menu' => 'account'], function () {
-            
-            Route::get('/', [
-                'as' => 'hospital.account.edit',
-                'uses' => 'AccountController@edit'
-            ]);
-
-            Route::post('/update', [
-                    'as' => 'hospital.account.update',
-                    'uses' => 'AccountController@update',
-            ]);
-        });
+        
     });
     
     Route::group(['middleware' => 'patient', 'namespace' => 'Patient'], function () {
@@ -256,38 +284,6 @@ Route::group(['prefix' => 'profil', 'namespace' => 'Front'], function () {
             '_active_menu' => 'dashboard'
         ]);
         
-        Route::group(['prefix' => 'contul-meu', '_active_menu' => 'account'], function () {
-            Route::get('/', [
-                'as' => 'patient.account.edit',
-                'uses' => 'AccountController@edit'
-            ]);
-
-            Route::post('/update', [
-                'as' => 'patient.account.update',
-                'uses' => 'AccountController@update',
-            ]);
-            
-            Route::post('/password', [
-                'as' => 'patient.update.password',
-                'uses' => 'AccountController@postPassword'
-            ]);
-
-            Route::post('/social/remove', [
-                'as' => 'patient.update.social.remove',
-                'uses' => 'AccountController@postSocialRemove'
-            ]);
-            
-            Route::get('/social/associate/{provider}', [
-                'as' => 'patient.update.social.associate',
-                'uses' => 'AccountController@getSocialAssociate'
-            ]);
-
-            Route::get('/social/associate/{provider}/callback', [
-                'as' => 'patient.update.social.associate.handle',
-                'uses' => 'AccountController@getSocialAssociateHandle'
-            ]);
-
-        });
     });
     
     Route::group(['middleware' => 'defaultM', 'namespace' => 'DefaultM'], function () {
@@ -442,6 +438,124 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
                 Route::get('/deactivate', [
                         'as' => 'admin.hospitals.deactivate',
                         'uses' => 'HospitalsController@deactivate'
+                ]);
+            });
+        });
+        
+        Route::group(['prefix' => 'social', '_active_menu' => 'social'], function () {
+            Route::get('/', [
+                'as' => 'admin.social.index',
+                'uses' => 'SocialController@getIndex'
+            ]);
+
+            Route::group(['prefix' => '{socialId}', 'where' => ['socialId' => '[0-9]+']], function () {
+                Route::get('/', [
+                    'as' => 'admin.social.show',
+                    'uses' => 'SocialController@getShow',
+                    '_active_tab' => 'overview'
+                ]);
+
+                Route::get('/delete', [
+                    'as' => 'admin.social.delete',
+                    'uses' => 'SocialController@getDelete'
+                ]);
+            });
+        });
+        
+        Route::group(['prefix' => 'ambulatorii', '_active_menu' => 'ambulatories'], function () {
+             Route::get('/', [
+                'as' => 'admin.ambulatories.index',
+                'uses' => 'AmbulatoriesController@getIndex'
+            ]);
+
+            Route::get('/create', [
+                'as' => 'admin.ambulatories.create',
+                'uses' => 'AmbulatoriesController@getCreate'
+            ]);
+
+             Route::post('/store', [
+                'as' => 'admin.ambulatories.store',
+                'uses' => 'AmbulatoriesController@postStore'
+            ]);
+
+            Route::group(['prefix' => '{ambulatoryId}', 'where' => ['ambulatoryId' => '[0-9]+']], function () {
+                Route::get('/', [
+                    'as' => 'admin.ambulatories.show',
+                    'uses' => 'AmbulatoriesController@getShow',
+                    '_active_tab' => 'overview'
+                ]);
+                Route::get('/delete', [
+                    'as' => 'admin.ambulatories.delete',
+                    'uses' => 'AmbulatoriesController@getDelete'
+                ]);
+                Route::get('/edit', [
+                    'as' => 'admin.ambulatories.edit',
+                    'uses' => 'AmbulatoriesController@getEdit',
+                    '_active_tab' => 'edit'
+                ]);
+
+                Route::post('/update', [
+                    'as' => 'admin.ambulatories.update',
+                    'uses' => 'AmbulatoriesController@postUpdate'
+                ]);
+                Route::get('/activate', [
+                    'as' => 'admin.ambulatories.activate',
+                    'uses' => 'AmbulatoriesController@getActivate'
+                ]);
+
+                Route::get('/deactivate', [
+                    'as' => 'admin.ambulatories.deactivate',
+                    'uses' => 'AmbulatoriesController@getDeactivate'
+                ]);
+            });
+        });
+        
+        Route::group(['prefix' => 'specialitati', '_active_menu' => 'specialities'], function () {
+             
+            Route::get('/', [
+                'as' => 'admin.specialities.index',
+                'uses' => 'SpecialitiesController@getIndex'
+            ]);
+
+            Route::get('/create', [
+                'as' => 'admin.specialities.create',
+                'uses' => 'SpecialitiesController@getCreate'
+            ]);
+
+            Route::post('/store', [
+                'as' => 'admin.specialities.store',
+                'uses' => 'SpecialitiesController@postStore'
+            ]);
+
+            Route::group(['prefix' => '{specialityId}', 'where' => ['specialityId' => '[0-9]+']], function () {
+                Route::get('/', [
+                    'as' => 'admin.specialities.show',
+                    'uses' => 'SpecialitiesController@getShow',
+                    '_active_tab' => 'overview'
+                ]);
+                Route::get('/delete', [
+                    'as' => 'admin.specialities.delete',
+                    'uses' => 'SpecialitiesController@getDelete'
+                ]);
+
+                Route::get('/edit', [
+                    'as' => 'admin.specialities.edit',
+                    'uses' => 'SpecialitiesController@getEdit',
+                    '_active_tab' => 'edit'
+                ]);
+
+                Route::post('/update', [
+                    'as' => 'admin.specialities.update',
+                    'uses' => 'SpecialitiesController@postUpdate'
+                ]);
+                Route::get('/activate', [
+                    'as' => 'admin.specialities.activate',
+                    'uses' => 'SpecialitiesController@getActivate'
+                ]);
+
+                Route::get('/deactivate', [
+                    'as' => 'admin.specialities.deactivate',
+                    'uses' => 'SpecialitiesController@getDeactivate'
                 ]);
             });
         });
