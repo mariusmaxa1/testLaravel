@@ -409,36 +409,74 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::group(['prefix' => '{hospitalId}', 'where' => ['hospitalId' => '[0-9]+']], function ($hospitalId) {
 
                 Route::get('/show', [
-                        'as' => 'admin.hospitals.show',
-                        'uses' => 'HospitalsController@show',
-                        '_active_tab' => 'informatii_spital'
+                    'as' => 'admin.hospitals.show',
+                    'uses' => 'HospitalsController@show',
+                    '_active_tab' => 'informatii_spital'
                 ]);
                 
                 Route::get('/delete', [
-                        'as' => 'admin.hospitals.delete',
-                        'uses' => 'HospitalsController@delete'
+                    'as' => 'admin.hospitals.delete',
+                    'uses' => 'HospitalsController@delete'
                 ]);
 
                 Route::get('/edit', [
-                        'as' => 'admin.hospitals.edit',
-                        'uses' => 'HospitalsController@edit',
-                        '_active_tab' => 'informatii_spital'
+                    'as' => 'admin.hospitals.edit',
+                    'uses' => 'HospitalsController@edit',
+                    '_active_tab' => 'informatii_spital'
                 ]);
 
                 Route::post('/update', [
-                        'as' => 'admin.hospitals.update',
-                        'uses' => 'HospitalsController@update'
+                    'as' => 'admin.hospitals.update',
+                    'uses' => 'HospitalsController@update'
                 ]);
                 
                 Route::get('/activate', [
-                        'as' => 'admin.hospitals.activate',
-                        'uses' => 'HospitalsController@activate'
+                    'as' => 'admin.hospitals.activate',
+                    'uses' => 'HospitalsController@activate'
                 ]);
 
                 Route::get('/deactivate', [
-                        'as' => 'admin.hospitals.deactivate',
-                        'uses' => 'HospitalsController@deactivate'
+                    'as' => 'admin.hospitals.deactivate',
+                    'uses' => 'HospitalsController@deactivate'
                 ]);
+                
+                Route::group(['prefix' => 'informatii', 'namespace' => 'Hospital'], function () {
+                    Route::get('/', [
+                        'as' => 'admin.hospitals.show.info',
+                        'uses' => 'HospitalInformationController@index',
+                        '_active_tab' => 'information'
+                    ]);
+
+                    Route::get('/edit', [
+                        'as' => 'admin.hospitals.edit.info',
+                        'uses' => 'HospitalInformationController@edit',
+                        '_active_tab' => 'information'
+                    ]);
+
+                    Route::post('/update', [
+                        'as' => 'admin.hospitals.update.info',
+                        'uses' => 'HospitalInformationController@update'
+                    ]);                    
+                }); 
+                
+                Route::group(['prefix' => 'descriere', 'namespace' => 'Hospital'], function () {
+                    Route::get('/', [
+                        'as' => 'admin.hospitals.show.description',
+                        'uses' => 'HospitalDescriptionController@index',
+                        '_active_tab' => 'description'
+                    ]);
+
+                    Route::get('/edit', [
+                        'as' => 'admin.hospitals.edit.description',
+                        'uses' => 'HospitalDescriptionController@edit',
+                        '_active_tab' => 'description'
+                    ]);
+
+                    Route::post('/update', [
+                        'as' => 'admin.hospitals.update.description',
+                        'uses' => 'HospitalDescriptionController@update'
+                    ]);                    
+                });   
             });
         });
         

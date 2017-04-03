@@ -36,7 +36,7 @@
                             @foreach($hospitals as $hospital)
                                 <tr>
                                     <td>{{ $hospital->id }}</td>
-                                    <td><a href="{{ route('admin.hospitals.show', $hospital->id) }}">{{ $hospital->name }}</a></td>
+                                    <td><a href="{{ route('admin.hospitals.show.info', $hospital->id) }}">{{ $hospital->name }}</a></td>
                                     <td>
                                         @if($hospital->active)
                                             <span class="label label-success">active</span>

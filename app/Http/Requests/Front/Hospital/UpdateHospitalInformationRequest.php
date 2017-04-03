@@ -23,7 +23,7 @@ class UpdateHospitalInformationRequest extends Request
     {
         return [
             'name' => 'required|max:255',
-            'country' => 'required|max:255',
+            'county' => 'required|max:255',
             'city' => 'required|max:255',
             'address' => 'required|max:255',
             'phone1' => 'required|max:255',
