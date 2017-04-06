@@ -5,44 +5,45 @@ namespace App\Http\Controllers\Admin\Hospital;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
-use App\HospitalDescription;
+use App\HospitalManager;
 use App\Images;
 use App\Http\Requests\Front\Hospital\UpdateHospitalDescriptionRequest;
 use Notification;
 
-class HospitalDescriptionController extends Controller
+class HospitalManagerController extends Controller
 {
     public function index($hospitalId)
     {
 
-        $hospitalDescription = HospitalDescription::findOrFail($hospitalId);
-        $hospitalImages = Images::where('hospital_id', $hospitalId)->get();
+        $hospitalManager = HospitalManager::findOrFail($hospitalId);
+        //$hospitalImages = Images::where('hospital_id', $hospitalId)->get();
                 
-        return view('admin.hospitals.description.index', [
-            'hospital' => $hospitalDescription,
-            'hospitalImages' => $hospitalImages,
+        return view('admin.hospitals.manager.index', [
+            'hospital' => $hospitalManager,
+        //    'hospitalImages' => $hospitalImages,
         ]);
     }
     
     public function edit($hospitalId)
     {
-        $hospitalDescription = HospitalDescription::findOrFail($hospitalId);
+        $hospitalManager = HospitalManager::findOrFail($hospitalId);
       
-        return view('admin.hospitals.description.edit', [
-            'hospital' => $hospitalDescription
+        return view('admin.hospitals.manager.edit', [
+            'hospital' => $hospitalManager
         ]);
     }
     
     public function update(UpdateHospitalDescriptionRequest $request, $hospitalId)
     {
 
-        $hospitalDescription = HospitalDescription::findOrFail($hospitalId);
+        $hospitalManager = HospitalManager::findOrFail($hospitalId);
 
-        $hospitalDescription->fill([
+        $hospitalManager->fill([
+            'name' => $request->get('name'),
             'description' => $request->get('description'),
         ]);
 
-        $hospitalDescription->save();
+        $hospitalManager->save();
 
         Notification::success('Date actualizate cu succes! ');
         

@@ -58,6 +58,7 @@ class HospitalAmbulatoryController extends Controller
              ]);    
             $hospitalAmbulatories->save();
             }
+        
         Notification::success('Date actualizate cu succes! ');     
         }
 

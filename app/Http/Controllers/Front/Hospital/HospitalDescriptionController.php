@@ -61,7 +61,7 @@ class HospitalDescriptionController extends Controller
 
         $file = $request->file('file');
         $name = time() . $file->getClientOriginalName();
-        $file->move('images/hospitals', $name);
+        $file->move('images/hospitals/description', $name);
         
         Images::create([
             'hospital_id' => $hospital->id,

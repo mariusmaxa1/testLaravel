@@ -7,7 +7,9 @@ class ComposerServiceProvider extends ServiceProvider
 {
     public function boot(Factory $factory)
     {
+        $factory->composer('_partials.admin.main_sidebar', 'App\Http\ViewComposers\Admin\MenuComposer');
         $factory->composer('_partials.front.menu', 'App\Http\ViewComposers\MenuComposer');
+        
         $factory->composer('_partials.admin.sort_snippet', 'App\Http\ViewComposers\OrderByComposer');
         $factory->composer('_partials.front.menu', 'App\Http\ViewComposers\RoleComposer'); 
     }

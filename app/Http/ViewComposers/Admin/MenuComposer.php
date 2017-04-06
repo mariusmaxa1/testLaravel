@@ -1,4 +1,4 @@
-<?php namespace App\Http\ViewComposers;
+<?php namespace App\Http\ViewComposers\Admin;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;

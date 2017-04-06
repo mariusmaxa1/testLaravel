@@ -155,6 +155,11 @@ Route::group(['prefix' => 'profil', 'namespace' => 'Front'], function () {
                     'as' => 'hospital.manager.update',
                     'uses' => 'HospitalManagerController@update',
             ]);
+            
+            Route::post('/store', [
+                    'as' => 'hospital.manager.store',
+                    'uses' => 'HospitalManagerController@store',
+            ]);            
         });
 
         Route::group(['prefix' => 'anunturi', '_active_menu' => 'news'], function () {
@@ -477,6 +482,83 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
                         'uses' => 'HospitalDescriptionController@update'
                     ]);                    
                 });   
+                
+                Route::group(['prefix' => 'cuvant-manager', 'namespace' => 'Hospital'], function () {
+                    Route::get('/', [
+                        'as' => 'admin.hospitals.show.manager',
+                        'uses' => 'HospitalManagerController@index',
+                        '_active_tab' => 'manager'
+                   ]);
+
+                   Route::get('/edit', [
+                        'as' => 'admin.hospitals.edit.manager',
+                        'uses' => 'HospitalManagerController@edit',
+                        '_active_tab' => 'manager'
+                    ]);
+
+                   Route::post('/update', [
+                        'as' => 'admin.hospitals.update.manager',
+                        'uses' => 'HospitalManagerController@update'
+                    ]);                     
+                });
+                
+                Route::group(['prefix' => 'ambulatorii', 'namespace' => 'Hospital'], function () {
+                    Route::get('/', [
+                        'as' => 'admin.hospitals.index.ambulatories',
+                        'uses' => 'HospitalAmbulatoriesController@index',
+                        '_active_tab' => 'ambulatories'
+                    ]);
+                
+                    Route::get('/create', [
+                        'as' => 'admin.hospitals.add.ambulatories',
+                        'uses' => 'HospitalAmbulatoriesController@edit',
+                        '_active_tab' => 'ambulatories'
+                    ]);
+
+                    Route::post('/store', [
+                        'as' => 'admin.hospitals.store.ambulatories',
+                        'uses' => 'HospitalAmbulatoriesController@update',
+                        '_active_tab' => 'ambulatories'
+                    ]);
+                 
+                });
+                
+                Route::group(['prefix' => 'specialitati', 'namespace' => 'Hospital'], function () {
+                     Route::get('/', [
+                        'as' => 'admin.hospitals.index.specialities',
+                        'uses' => 'HospitalSpecialitiesController@index',
+                        '_active_tab' => 'specialities'
+                    ]);
+                
+                    Route::get('/create', [
+                        'as' => 'admin.hospitals.add.specialities',
+                        'uses' => 'HospitalSpecialitiesController@edit',
+                        '_active_tab' => 'specialities'
+                    ]);
+
+                    Route::post('/store', [
+                        'as' => 'admin.hospitals.store.specialities',
+                        'uses' => 'HospitalSpecialitiesController@update',
+                        '_active_tab' => 'specialities'
+                    ]);
+            
+                });
+                
+                Route::group(['prefix' => 'doctors', 'namespace' => 'Hospital'], function () {
+                    Route::get('/', [
+                        'as' => 'admin.hospitals.index.doctors',
+                        'uses' => 'HospitalDoctorsController@index',
+                        '_active_tab' => 'doctors'
+                    ]);                  
+                });
+                
+                Route::group(['prefix' => 'indicators', 'namespace' => 'Hospital'], function () {
+                    Route::get('/', [
+                        'as' => 'admin.hospitals.index.indicators',
+                        'uses' => 'HospitalIndicatorsController@index',
+                        '_active_tab' => 'indicators'
+                     ]);                 
+                });
             });
         });
         
