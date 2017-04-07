@@ -582,7 +582,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             });
         });
         
-        Route::group(['prefix' => 'ambulatorii', '_active_menu' => 'ambulatories'], function () {
+        Route::group(['prefix' => 'ambulatories', '_active_menu' => 'ambulatories'], function () {
              Route::get('/', [
                 'as' => 'admin.ambulatories.index',
                 'uses' => 'AmbulatoriesController@getIndex'
@@ -630,7 +630,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             });
         });
         
-        Route::group(['prefix' => 'specialitati', '_active_menu' => 'specialities'], function () {
+        Route::group(['prefix' => 'specialities', '_active_menu' => 'specialities'], function () {
              
             Route::get('/', [
                 'as' => 'admin.specialities.index',
@@ -679,6 +679,20 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
                 ]);
             });
         });
+        
+        Route::resource('dentists', 'DefaultController');
+        
+        Route::resource('doctors', 'DefaultController');
+        
+        Route::resource('familyDoctors', 'DefaultController');
+        
+        Route::resource('laboratories', 'DefaultController');
+        
+        Route::resource('pharmacies', 'DefaultController');
+        
+        Route::resource('privateAmbulances', 'DefaultController');
+        
+        Route::resource('privateClinics', 'DefaultController');
     });
 });  
  
