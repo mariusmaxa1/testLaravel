@@ -13,27 +13,7 @@
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">
-                            @if ($routeName == 'dentists.create')
-                            <form class="form-horizontal" method="POST" action="{{ route('dentists.store') }}">
-                            @endif
-                            @if ($routeName == 'doctors.create')
-                            <form class="form-horizontal" method="POST" action="{{ route('doctors.store') }}">
-                            @endif
-                            @if ($routeName == 'pharmacies.create')
-                            <form class="form-horizontal" method="POST" action="{{ route('pharmacies.store') }}">
-                            @endif
-                            @if ($routeName == 'familyDoctors.create')
-                            <form class="form-horizontal" method="POST" action="{{ route('familyDoctors.store') }}">
-                            @endif
-                            @if ($routeName == 'privateClinics.create')
-                            <form class="form-horizontal" method="POST" action="{{ route('privateClinics.store') }}">
-                            @endif
-                            @if ($routeName == 'privateAmbulances.create')
-                            <form class="form-horizontal" method="POST" action="{{ route('privateAmbulances.store') }}">
-                            @endif
-                            @if ($routeName == 'laboratories.create')
-                            <form class="form-horizontal" method="POST" action="{{ route('laboratories.store') }}">
-                            @endif
+                            <form class="form-horizontal" method="POST" action="{{ route($modelName.'.store') }}">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             @if (count($errors) > 0)
                                 <div class="alert alert-danger alert-dismissable">

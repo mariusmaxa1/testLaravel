@@ -10,28 +10,8 @@
 
                 <div class="tab-content">
                     <div class="tab-pane active">
-                            @if ($routeName == 'dentists.edit')
-                            <form class="form-horizontal" method="POST" action="{{ route('dentists.update', $defaultModel->id) }}">
-                            @endif
-                            @if ($routeName == 'doctors.edit')
-                            <form class="form-horizontal" method="POST" action="{{ route('doctors.update', $defaultModel->id) }}">
-                            @endif
-                            @if ($routeName == 'pharmacies.edit')
-                            <form class="form-horizontal" method="POST" action="{{ route('pharmacies.update', $defaultModel->id) }}">
-                            @endif
-                            @if ($routeName == 'familyDoctors.edit')
-                            <form class="form-horizontal" method="POST" action="{{ route('familyDoctors.update', $defaultModel->id) }}">
-                            @endif
-                            @if ($routeName == 'privateClinics.edit')
-                            <form class="form-horizontal" method="POST" action="{{ route('privateClinics.update', $defaultModel->id) }}">
-                            @endif
-                            @if ($routeName == 'privateAmbulances.edit')
-                            <form class="form-horizontal" method="POST" action="{{ route('privateAmbulances.update', $defaultModel->id) }}">
-                            @endif
-                            @if ($routeName == 'laboratories.edit')
-                            <form class="form-horizontal" method="POST" action="{{ route('laboratories.update', $defaultModel->id) }}">
-                            @endif
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            {{ Form::model($defaultModel, array('route' => array($modelName.'.update', $defaultModel->id), 'class' => 'form-horizontal', 'method' => 'PUT')) }}
+                            <form class="form-horizontal" method="PUT" action="{{ route($modelName.'.update', $defaultModel->id) }}">
                             @if (count($errors) > 0)
                                 <div class="alert alert-danger alert-dismissable">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -121,7 +101,7 @@
                                     <button type="submit" class="btn btn-success">Save</button>
                                 </div>
                             </div>
-                        </form>
+                        {{ Form::close() }}
                     </div>
                 </div>
             </div>

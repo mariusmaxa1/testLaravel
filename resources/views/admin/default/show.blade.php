@@ -103,12 +103,12 @@
                         <div class="clearfix">
                             <div class="pull-right">
                                 @if($defaultModel->active)
-                                    <a href="{{ route('admin.hospitals.deactivate', $defaultModel->id) }}" class="btn btn-info confirm-action"><i class="fa fa-minus-circle"></i> Deactivate</a>
+                                    <a href="{{ url('admin/'.$modelName.'/'.$defaultModel->id.'/deactivate') }}" class="btn btn-info confirm-action"><i class="fa fa-minus-circle"></i> Deactivate</a>
                                 @else
-                                    <a href="{{ route('admin.hospitals.activate', $defaultModel->id) }}" class="btn btn-success confirm-action"><i class="fa fa-check"></i> Activate</a>
+                                    <a href="{{ url('admin/'.$modelName.'/'.$defaultModel->id.'/activate') }}" class="btn btn-success confirm-action"><i class="fa fa-check"></i> Activate</a>
                                 @endif
-                                <a href="{{ route('admin.hospitals.edit', $defaultModel->id) }}" class="btn btn-warning"><i class="fa fa-pencil"></i> Edit</a>
-                                <a href="{{ route('admin.hospitals.delete', $defaultModel->id) }}" class="btn btn-danger confirm-action"><i class="fa fa-trash"></i> Delete</a>
+                                <a href="{{ route($modelName.'.edit', $defaultModel->id) }}" class="btn btn-warning"><i class="fa fa-pencil"></i> Edit</a>
+                                <a href="{{ route($modelName.'.destroy', $defaultModel->id) }}" class="btn btn-danger confirm-action"><i class="fa fa-trash"></i> Delete</a>
                             </div>
                         </div>
                     </div>

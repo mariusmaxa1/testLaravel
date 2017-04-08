@@ -83,9 +83,12 @@ class DefaultController extends Controller
         if (!is_null($query)) {
             $defaultModel->appends('query', $query);
         }
-					
+        
+        $modelName =  explode(".", $routeName); 
+        $modelName = $modelName[0];
+
         return view('admin.default.index', [
-            'routeName' => $routeName,
+            'modelName' => $modelName,
             'defaultModel' => $defaultModel,
             'query' => $query,
             'title' => $title
@@ -121,8 +124,14 @@ class DefaultController extends Controller
         if ($routeName == 'laboratories.create') {
             $title = 'Laboratoare de analiza';
         }
+        
+        $modelName =  explode(".", $routeName); 
+        $modelName = $modelName[0];
+        
+        
         return view('admin.default.create',[
             'routeName' => $routeName,
+            'modelName' => $modelName,
             'title'  => $title
             ]);
     }
@@ -157,11 +166,13 @@ class DefaultController extends Controller
         if ($routeName == 'laboratories.store') {
             Laboratories::create($request->all());
         }
-
+        
+        $modelName =  explode(".", $routeName); 
+        $modelName = $modelName[0];
 
         Notification::success('Succes.');
 
-        return Redirect::back();
+        return redirect()->route($modelName.'.index');
     }
 
     /**
@@ -202,8 +213,12 @@ class DefaultController extends Controller
             $defaultModel = Laboratories::findOrFail($id);
         }
         
+        $modelName =  explode(".", $routeName); 
+        $modelName = $modelName[0];
+        
         return view('admin.default.show', [
             'defaultModel' => $defaultModel,
+            'modelName' => $modelName,
             'title' => $title,
         ]);
     }
@@ -246,9 +261,13 @@ class DefaultController extends Controller
             $defaultModel = Laboratories::findOrFail($id);
         }
         
+        $modelName =  explode(".", $routeName); 
+        $modelName = $modelName[0];
+        
         return view('admin.default.edit', [
             'defaultModel' => $defaultModel,
             'routeName' => $routeName,
+            'modelName' => $modelName,
             'title' => $title,
         ]);
     }
@@ -263,46 +282,49 @@ class DefaultController extends Controller
     public function update(Request $request, $id)
     {
         $routeName =  Route::currentRouteName();
-        if ($routeName == 'dentists.edit') {
+        if ($routeName == 'dentists.update') {
             $title = 'Stomatologi';
             $defaultModel = Dentists::findOrFail($id);
             $defaultModel = $defaultModel->update($request->all());
         }
-        if ($routeName == 'doctors.edit') {
+        if ($routeName == 'doctors.update') {
             $title = 'Medici specialisti';
             $defaultModel = Doctors::findOrFail($id);
             $defaultModel = $defaultModel->update($request->all());
         }
-        if ($routeName == 'pharmacies.destroy') {
+        if ($routeName == 'pharmacies.update') {
             $title = 'Farmacii';
             $defaultModel = Pharmacies::findOrFail($id);
             $defaultModel = $defaultModel->update($request->all());
         }
-        if ($routeName == 'familyDoctors.edit') {
+        if ($routeName == 'familyDoctors.update') {
             $title = 'Medici de familie';
             $defaultModel = FamilyDoctors::findOrFail($id);
             $defaultModel = $defaultModel->update($request->all());
         }
-        if ($routeName == 'privateClinics.edit') {
+        if ($routeName == 'privateClinics.update') {
             $title = 'Clinci private';
             $defaultModel = PrivateClinics::findOrFail($id);
             $defaultModel = $defaultModel->update($request->all());
         }
-        if ($routeName == 'privateAmbulances.edit') {
+        if ($routeName == 'privateAmbulances.update') {
             $title = 'Ambulanta privata';
             $defaultModel = PrivateAmbulances::findOrFail($id);
             $defaultModel = $defaultModel->update($request->all());
         }
-        if ($routeName == 'laboratories.edit') {
+        if ($routeName == 'laboratories.update') {
             $title = 'Laboratoare de analiza';
             $defaultModel = Laboratories::findOrFail($id);
             $defaultModel = $defaultModel->update($request->all());
         }
 
 
+        $modelName =  explode(".", $routeName); 
+        $modelName = $modelName[0];
+
         Notification::success('Succes.');
 
-        return Redirect::back();
+        return redirect()->route($modelName.'.index');
     }
 
     /**
@@ -345,9 +367,93 @@ class DefaultController extends Controller
         
         $defaultModel->delete();
 
-        Notification::success('Sters cu succes din baza de date.');
+        $modelName =  explode(".", $routeName); 
+        $modelName = $modelName[0];
 
-        return Redirect::back();
+        Notification::success('Succes.');
+
+        return redirect()->route($modelName.'.index');
       
+    }
+    
+    public function activate($modelName, $id)
+    {
+        
+        if ($modelName == 'dentists') {
+            $title = 'Stomatologi';
+            $defaultModel = Dentists::findOrFail($id);
+        }
+        if ($modelName == 'doctors') {
+            $title = 'Medici specialisti';
+            $defaultModel = Doctors::findOrFail($id);
+        }
+        if ($modelName == 'pharmacies') {
+            $title = 'Farmacii';
+            $defaultModel = Pharmacies::findOrFail($id);
+        }
+        if ($modelName == 'familyDoctors') {
+            $title = 'Medici de familie';
+            $defaultModel = FamilyDoctors::findOrFail($id);
+        }
+        if ($modelName == 'privateClinics') {
+            $title = 'Clinci private';
+            $defaultModel = PrivateClinics::findOrFail($id);
+        }
+        if ($modelName == 'privateAmbulances') {
+            $title = 'Ambulanta privata';
+            $defaultModel = PrivateAmbulances::findOrFail($id);
+        }
+        if ($modelName == 'laboratories') {
+            $title = 'Laboratoare de analiza';
+            $defaultModel = Laboratories::findOrFail($id);
+        }
+      
+        if ($defaultModel->active == 0) {
+            $defaultModel->active = true;
+            $defaultModel->save();
+            Notification::success('Succes.');
+        }
+
+        return redirect()->back();
+    }
+
+    public function deactivate($modelName, $id)
+    {
+        if ($modelName == 'dentists') {
+            $title = 'Stomatologi';
+            $defaultModel = Dentists::findOrFail($id);
+        }
+        if ($modelName == 'doctors') {
+            $title = 'Medici specialisti';
+            $defaultModel = Doctors::findOrFail($id);
+        }
+        if ($modelName == 'pharmacies') {
+            $title = 'Farmacii';
+            $defaultModel = Pharmacies::findOrFail($id);
+        }
+        if ($modelName == 'familyDoctors') {
+            $title = 'Medici de familie';
+            $defaultModel = FamilyDoctors::findOrFail($id);
+        }
+        if ($modelName == 'privateClinics') {
+            $title = 'Clinci private';
+            $defaultModel = PrivateClinics::findOrFail($id);
+        }
+        if ($modelName == 'privateAmbulances') {
+            $title = 'Ambulanta privata';
+            $defaultModel = PrivateAmbulances::findOrFail($id);
+        }
+        if ($modelName == 'laboratories') {
+            $title = 'Laboratoare de analiza';
+            $defaultModel = Laboratories::findOrFail($id);
+        }
+
+        if ($defaultModel->active == 1) {
+            $defaultModel->active = false;
+            $defaultModel->save();
+            Notification::success('Succes.');
+        }
+
+        return redirect()->back();
     }
 }

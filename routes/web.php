@@ -693,6 +693,14 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
         Route::resource('privateAmbulances', 'DefaultController');
         
         Route::resource('privateClinics', 'DefaultController');
+        
+        Route::get('/{modelName}/{id}/activate', [
+            'uses' => 'DefaultController@activate'
+        ]);
+
+        Route::get('/{modelName}/{id}/deactivate', [
+            'uses' => 'DefaultController@deactivate'
+        ]);
     });
 });  
  
