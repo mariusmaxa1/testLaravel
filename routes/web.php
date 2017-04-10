@@ -680,6 +680,143 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             });
         });
         
+        Route::group(['prefix' => 'chestionare', '_active_menu' => 'surveys'], function () {
+            Route::get('/', [
+                'as' => 'admin.surveys.index',
+                'uses' => 'SurveysController@index'
+            ]);
+
+            Route::get('/create', [
+                'as' => 'admin.surveys.create',
+                'uses' => 'SurveysController@create'
+            ]);
+
+            Route::post('/store', [
+                'as' => 'admin.surveys.store',
+                'uses' => 'SurveysController@store'
+            ]);
+
+            Route::group(['prefix' => '{surveyId}', 'where' => ['surveyId' => '[0-9]+']], function () {
+                Route::get('/', [
+                    'as' => 'admin.surveys.show',
+                    'uses' => 'SurveysController@show',
+                    '_active_tab' => 'overview'
+                ]);
+
+                Route::get('/delete', [
+                    'as' => 'admin.surveys.destroy',
+                    'uses' => 'SurveysController@destroy'
+                ]);
+
+                Route::get('/edit', [
+                    'as' => 'admin.surveys.edit',
+                    'uses' => 'SurveysController@edit',
+                    '_active_tab' => 'edit'
+                ]);
+
+                Route::post('/update', [
+                    'as' => 'admin.surveys.update',
+                    'uses' => 'SurveysController@update'
+                ]);
+                
+               Route::get('/activate', [
+                    'as' => 'admin.surveys.activate',
+                    'uses' => 'SurveysController@activate',
+                    '_active_tab' => 'edit'
+                ]);
+
+                Route::get('/deactivate', [
+                    'as' => 'admin.surveys.deactivate',
+                    'uses' => 'SurveysController@deactivate'
+                ]);
+
+                Route::group(['prefix' => 'sectiuni', '_active_tab' => 'sections'], function () {
+                    Route::get('/', [
+                        'as' => 'admin.surveys.sections.index',
+                        'uses' => 'SurveysController@sections'
+                    ]);
+
+                    Route::post('/create', [
+                        'as' => 'admin.surveys.sections.create',
+                        'uses' => 'SurveysController@postSections'
+                    ]);
+                    
+                    Route::group(['prefix' => '{sectionId}', 'where' => ['sectionId' => '[0-9]+']], function () {
+                        Route::get('/delete', [
+                            'as' => 'admin.surveys.sections.destroy',
+                            'uses' => 'SurveysController@destroySections'
+                        ]);
+
+                        Route::get('/edit', [
+                            'as' => 'admin.surveys.sections.edit',
+                            'uses' => 'SurveysController@editSections',
+                            '_active_tab' => 'edit'
+                        ]);
+
+                        Route::post('/update', [
+                            'as' => 'admin.surveys.sections.update',
+                            'uses' => 'SurveysController@updateSections'
+                        ]);
+                        
+                        Route::get('/activate', [
+                            'as' => 'admin.surveys.sections.activate',
+                            'uses' => 'SurveysController@activateSections',
+                            '_active_tab' => 'edit'
+                        ]);
+
+                        Route::get('/deactivate', [
+                            'as' => 'admin.surveys.sections.deactivate',
+                            'uses' => 'SurveysController@deactivateSections'
+                        ]);                    
+                    });    
+                    
+                });
+                
+                Route::group(['prefix' => 'intrebari', '_active_tab' => 'questions'], function () {
+                    Route::get('/', [
+                        'as' => 'admin.surveys.questions.index',
+                        'uses' => 'SurveysController@questions'
+                    ]);
+
+                    Route::post('/create', [
+                        'as' => 'admin.surveys.questions.create',
+                        'uses' => 'SurveysController@postQuestions'
+                    ]);
+                    
+                    Route::group(['prefix' => '{questionId}', 'where' => ['questionId' => '[0-9]+']], function () {
+                        Route::get('/delete', [
+                            'as' => 'admin.surveys.questions.destroy',
+                            'uses' => 'SurveysController@destroyQuestions'
+                        ]);
+
+                        Route::get('/edit', [
+                            'as' => 'admin.surveys.questions.edit',
+                            'uses' => 'SurveysController@editQuestions',
+                            '_active_tab' => 'edit'
+                        ]);
+
+                        Route::post('/update', [
+                            'as' => 'admin.surveys.questions.update',
+                            'uses' => 'SurveysController@updateQuestions'
+                        ]);
+                        
+                        Route::get('/activate', [
+                            'as' => 'admin.surveys.questions.activate',
+                            'uses' => 'SurveysController@activateQuestions',
+                            '_active_tab' => 'edit'
+                        ]);
+
+                        Route::get('/deactivate', [
+                            'as' => 'admin.surveys.questions.deactivate',
+                            'uses' => 'SurveysController@deactivateQuestions'
+                        ]);   
+                                          
+                    });    
+                    
+                });
+            });
+        });
+        
         Route::resource('dentists', 'DefaultController');
         
         Route::resource('doctors', 'DefaultController');

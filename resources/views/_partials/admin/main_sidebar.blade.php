@@ -27,6 +27,7 @@
             <li @if(isset($_active_menu) && $_active_menu == 'pharmacies') class="active" @endif ><a href="{{ route('pharmacies.index') }}"><i class="fa fa-heartbeat"></i> <span>Farmacii</span></a></li>
             <li @if(isset($_active_menu) && $_active_menu == 'privateAmbulances') class="active" @endif ><a href="{{ route('privateAmbulances.index') }}"><i class="fa fa-heartbeat"></i> <span>Ambulanta rpivata</span></a></li>
             <li @if(isset($_active_menu) && $_active_menu == 'privateClinics') class="active" @endif ><a href="{{ route('privateClinics.index') }}"><i class="fa fa-heartbeat"></i> <span>Clinici private</span></a></li>
+            <li @if(isset($_active_menu) && $_active_menu == 'surveys') class="active" @endif ><a href="{{ route('admin.surveys.index') }}"><i class="fa fa-heartbeat"></i> <span>Chestionare</span></a></li>
         </ul>
         <ul class="sidebar-menu">
             <li class="header">Adverts</li>
