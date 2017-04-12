@@ -2,7 +2,7 @@
 
 @section('title', 'Users - List')
 
-@section('content_header', 'Users <small>users list</small>')
+@section('content_header', 'Users')
 
 @section('content')
     <div class="row">
@@ -52,6 +52,11 @@
                                     <td>{{ $user->created_at }}</td>
                                     <td>{{ $user->updated_at }}</td>
                                     <td class="text-right">
+                                        @if($user->active)
+                                            <a href="{{ route('admin.users.deactivate', $user->id) }}" class="btn btn-info btn-xs confirm-action">Deactivate</a>
+                                        @else
+                                            <a href="{{ route('admin.users.activate', $user->id) }}" class="btn btn-success btn-xs confirm-action">Activate</a>
+                                        @endif
                                         <a href="{{ route('admin.users.show', $user->id) }}" class="btn btn-success btn-xs">view</a>
                                         <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-warning btn-xs">edit</a>
                                         <a href="{{ route('admin.users.delete', $user->id) }}" class="btn btn-danger btn-xs confirm-action">delete</a>

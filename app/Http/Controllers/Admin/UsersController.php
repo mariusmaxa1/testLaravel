@@ -3,7 +3,6 @@
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreUserRequest;
 use App\Http\Requests\Admin\UpdateUserRequest;
-use App\Models\Payment;
 use App\User;
 use App\UsersSocial;
 use App\Role;
@@ -23,8 +22,8 @@ class UsersController extends Controller
     {
         $query = $request->get('query');
 
-        $sortBy = 'email';
-        $sortOrder = 'asc';
+        $sortBy = 'created_at';
+        $sortOrder = 'desc';
 
         $sortFields = ['id', 'name', 'email', 'created_at', 'updated_at'];
 
@@ -97,6 +96,7 @@ class UsersController extends Controller
             'email' => $request->get('email'),
             'password' => bcrypt($request->get('password')),
             'role_id' => $request->get('role'),
+            'active' => (bool) $request->get('active'),
         ]);
 
         $user->save();
@@ -154,6 +154,7 @@ class UsersController extends Controller
         $user->fill([
             'name' => $request->get('name'),
             'role_id' => $request->get('role'),
+            'active' => (bool) $request->get('active'),
         ]);
 
         if (strlen($request->get('new_password')) > 0) {
@@ -185,6 +186,32 @@ class UsersController extends Controller
         Notification::success('User social profile removed successfully.');
 
         return redirect()->route('admin.users.show', $user->id);
+    }
+    
+    public function activate($userId)
+    {
+        $user = User::findOrFail($userId);
+
+        if ($user->active == 0) {
+            $user->active = true;
+            $user->save();
+            Notification::success('User activat cu succes.');
+        }
+
+        return redirect()->back();
+    }
+
+    public function deactivate($userId)
+    {
+        $user = User::findOrFail($userId);
+
+        if ($user->active == 1) {
+            $user->active = false;
+            $user->save();
+            Notification::success('User dezactivat cu succes.');
+        }
+
+        return redirect()->back();
     }
 
 

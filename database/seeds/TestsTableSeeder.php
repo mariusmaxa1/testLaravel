@@ -20,6 +20,7 @@ class TestsTableSeeder extends Seeder
                     'email' => 'spital@calitatespitale.ro',
                     'password' => Hash::make('admin123'), 
                     'role_id' => 1,
+                    'active' => 1,
                     'created_at' => Carbon::now(), 
                     'updated_at' => Carbon::now()),
         ));
@@ -30,6 +31,7 @@ class TestsTableSeeder extends Seeder
                     'email' => 'farmacie@calitatespitale.ro',
                     'password' => Hash::make('admin123'), 
                     'role_id' => 2,
+                    'active' => 1,
                     'created_at' => Carbon::now(), 
                     'updated_at' => Carbon::now()),
         ));
@@ -39,6 +41,7 @@ class TestsTableSeeder extends Seeder
                     'email' => 'medicdefamilie@calitatespitale.ro',
                     'password' => Hash::make('admin123'), 
                     'role_id' => 3,
+                    'active' => 1,
                     'created_at' => Carbon::now(), 
                     'updated_at' => Carbon::now()),
         ));
@@ -48,6 +51,7 @@ class TestsTableSeeder extends Seeder
                     'email' => 'clinica@calitatespitale.ro',
                     'password' => Hash::make('admin123'), 
                     'role_id' => 4,
+                    'active' => 1,
                     'created_at' => Carbon::now(), 
                     'updated_at' => Carbon::now()),
         ));
@@ -57,6 +61,7 @@ class TestsTableSeeder extends Seeder
                     'email' => 'medicspecialist@calitatespitale.ro',
                     'password' => Hash::make('admin123'), 
                     'role_id' => 5,
+                    'active' => 1,
                     'created_at' => Carbon::now(), 
                     'updated_at' => Carbon::now()),
         ));
@@ -66,6 +71,7 @@ class TestsTableSeeder extends Seeder
                     'email' => 'laborator@calitatespitale.ro',
                     'password' => Hash::make('admin123'), 
                     'role_id' => 6,
+                    'active' => 1,
                     'created_at' => Carbon::now(), 
                     'updated_at' => Carbon::now()),
         ));
@@ -75,6 +81,7 @@ class TestsTableSeeder extends Seeder
                     'email' => 'stomatologie@calitatespitale.ro',
                     'password' => Hash::make('admin123'), 
                     'role_id' => 7,
+                    'active' => 1,
                     'created_at' => Carbon::now(), 
                     'updated_at' => Carbon::now()),
         ));
@@ -84,6 +91,7 @@ class TestsTableSeeder extends Seeder
                     'email' => 'pacient@calitatespitale.ro',
                     'password' => Hash::make('admin123'), 
                     'role_id' => 8,
+                    'active' => 1,
                     'created_at' => Carbon::now(), 
                     'updated_at' => Carbon::now()),
         ));
@@ -93,6 +101,7 @@ class TestsTableSeeder extends Seeder
                     'email' => 'admin@calitatespitale.ro',
                     'password' => Hash::make('admin123'), 
                     'role_id' => 9,
+                    'active' => 1,
                     'created_at' => Carbon::now(), 
                     'updated_at' => Carbon::now()),
         ));
@@ -102,6 +111,7 @@ class TestsTableSeeder extends Seeder
                     'email' => 'ambulanta@calitatespitale.ro',
                     'password' => Hash::make('admin123'), 
                     'role_id' => 10,
+                    'active' => 1,
                     'created_at' => Carbon::now(), 
                     'updated_at' => Carbon::now()),
         ));

@@ -2,7 +2,7 @@
 
 @section('title', 'Spitale - Lista')
 
-@section('content_header', 'Spitale <small>lista spitale</small>')
+@section('content_header', 'Spitale')
 
 @section('content')
     <div class="row">

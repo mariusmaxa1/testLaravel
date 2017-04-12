@@ -2,7 +2,7 @@
 
 @section('title', 'Users - Create')
 
-@section('content_header', 'Users <small>create new user</small>')
+@section('content_header', 'Users - Create')
 
 @section('content')
     <div class="row">
@@ -53,6 +53,18 @@
                                 <label for="inputPassword" class="col-sm-2 control-label">Password</label>
                                 <div class="col-sm-10">
                                     <input name="password" type="password" type="text" class="form-control" id="inputPassword">
+                                </div>
+                            </div>
+                            <div class="form-group @if($errors->has('active')) has-error @endif">
+                                <label class="col-sm-2 control-label"></label>
+                                <div class="col-sm-10">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input name="active" type="hidden" value="0">
+                                            <input name="active" type="checkbox" value="1" @if(old('active')) checked @endif>
+                                            Active
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                             <hr>

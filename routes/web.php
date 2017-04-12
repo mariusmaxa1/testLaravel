@@ -19,6 +19,11 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
+Route::get('/cautare/{tip}', [
+    'as' => 'anunturi',
+    'uses' => 'FrontController@index'
+]);
+
 Route::get('social/login/redirect/{provider}', [
     'uses' => 'Auth\SocialController@redirectToProvider', 
     'as' => 'social.login'
@@ -367,30 +372,21 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
                     'uses' => 'UsersController@postUpdate'
                 ]);
 
-                Route::group(['prefix' => 'balance', '_active_tab' => 'balance'], function () {
-                    Route::get('/', [
-                        'as' => 'admin.users.balance',
-                        'uses' => 'UsersController@getBalance'
-                    ]);
+                Route::get('/activate', [
+                    'as' => 'admin.users.activate',
+                    'uses' => 'UsersController@activate'
+                ]);
 
-                    Route::post('/process', [
-                        'as' => 'admin.users.balance.process',
-                        'uses' => 'UsersController@postBalanceProcess'
-                    ]);
-                });
+                Route::get('/deactivate', [
+                    'as' => 'admin.users.deactivate',
+                    'uses' => 'UsersController@deactivate'
+                ]);                
 
                 Route::group(['prefix' => 'social'], function () {
                     Route::get('{socialId}/delete', [
                         'as' => 'admin.users.social.delete',
                         'uses' => 'UsersController@getSocialDelete'
                     ])->where('socialId', '[0-9]+');
-                });
-
-                Route::group(['prefix' => 'companies'], function () {
-                    Route::get('{companyId}/delete', [
-                        'as' => 'admin.users.companies.delete',
-                        'uses' => 'UsersController@getCompaniesDelete'
-                    ])->where('companyId', '[0-9]+');
                 });
             });
         });
@@ -794,6 +790,25 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
                             'uses' => 'SurveysController@editQuestions',
                             '_active_tab' => 'edit'
                         ]);
+                        
+                        Route::get('/raspuns', [
+                            'as' => 'admin.surveys.questions.answers.edit',
+                            'uses' => 'SurveysController@editAnswers',
+                            '_active_tab' => 'edit'
+                        ]);                      
+                        
+                        Route::post('/raspuns/update', [
+                            'as' => 'admin.surveys.questions.answers.update',
+                            'uses' => 'SurveysController@updateAnswers'
+                        ]);
+                        
+                        Route::group(['prefix' => '{answerId}', 'where' => ['answerId' => '[0-9]+']], function () {
+                            Route::get('/delete', [
+                                'as' => 'admin.surveys.questions.answers.destroy',
+                                'uses' => 'SurveysController@destroyAnswers'
+                            ]);
+                        });
+                        
 
                         Route::post('/update', [
                             'as' => 'admin.surveys.questions.update',

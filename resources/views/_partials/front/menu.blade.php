@@ -32,8 +32,9 @@
 @if ($role == "default")
 <div class="list-group">
     <a href="{{ route('hospital.dashboard.index') }}" @if(isset($_active_menu) && $_active_menu == 'dashboard') class="list-group-item active" @else class="list-group-item" @endif> Dashboard </a>
+    <a href="{{ route('hospital.dashboard.index') }}" @if(isset($_active_menu) && $_active_menu == 'profil') class="list-group-item active" @else class="list-group-item" @endif> Profil </a>
     <a href="{{ route('hospital.dashboard.index') }}" @if(isset($_active_menu) && $_active_menu == '') class="list-group-item active" @else class="list-group-item" @endif> Descriere </a>
-    <a href="{{ route('hospital.dashboard.index') }}" @if(isset($_active_menu) && $_active_menu == '') class="list-group-item active" @else class="list-group-item" @endif> Program </a>
+    <a href="{{ route('hospital.dashboard.index') }}" @if(isset($_active_menu) && $_active_menu == '') class="list-group-item active" @else class="list-group-item" @endif> Program  de lucru</a>
     <a href="{{ route('hospital.dashboard.index') }}" @if(isset($_active_menu) && $_active_menu == 'information') class="list-group-item active" @else class="list-group-item" @endif> Programari </a>
     <a href="{{ route('account.edit') }}" @if(isset($_active_menu) && $_active_menu == 'account') class="list-group-item active" @else class="list-group-item" @endif> Contul meu </a>
 </div>

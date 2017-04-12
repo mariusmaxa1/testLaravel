@@ -58,21 +58,6 @@
                                         <input id="inputNote" type="text" class="form-control" name="order" @if($errors) value="{{ old('order') }}" @endif >
                                     </div>
                                 </div>
-                                    <div class="form-group">
-                                    <label class="col-xs-1 control-label">Book</label>
-                                    <div class="col-xs-4">
-                                        <input type="text" class="form-control" name="book[0].title" placeholder="Title" />
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <input type="text" class="form-control" name="book[0].isbn" placeholder="ISBN" />
-                                    </div>
-                                    <div class="col-xs-2">
-                                        <input type="text" class="form-control" name="book[0].price" placeholder="Price" />
-                                    </div>
-                                    <div class="col-xs-1">
-                                        <button type="button" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>
-                                    </div>
-                                </div>
                                 <div class="form-group @if($errors->has('active')) has-error @endif">
                                     <label class="col-sm-4 control-label"></label>
                                     <div class="col-sm-6">
@@ -121,7 +106,7 @@
                                             @else
                                                 <a href="{{ route('admin.surveys.questions.activate', [$survey->id, $question->id]) }}" class="btn btn-success btn-xs confirm-action">Activate</a>
                                             @endif
-                                            <a href="{{ route('admin.surveys.questions.edit', [$survey->id, $question->id]) }}" class="btn btn-success btn-xs">Raspunsuri</a>
+                                            <a href="{{ route('admin.surveys.questions.answers.edit', [$survey->id, $question->id]) }}" class="btn btn-success btn-xs">Raspunsuri</a>
                                             <a href="{{ route('admin.surveys.questions.edit', [$survey->id, $question->id]) }}" class="btn btn-warning btn-xs">edit</a>
                                             <a href="{{ route('admin.surveys.sections.destroy', [$survey->id, $question->id]) }}" class="btn btn-danger btn-xs confirm-action">delete</a>
                                          </td>
@@ -144,5 +129,4 @@
             </div>
         </section>
     </div>
-<script>
 @endsection

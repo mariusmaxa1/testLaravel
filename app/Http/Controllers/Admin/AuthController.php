@@ -43,14 +43,14 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ]);
-
+        
         $credentials = $request->only('email', 'password');
 
         // Check only for admins
-        $credentials['role_id'] = 9;
-
-        if ($this->auth->attempt($credentials, $request->has('remember'))) {
-            return redirect()->intended(route('admin.dashboard'));
+        // $credentials['role_id'] = 9;
+        
+        if ($this->auth->attempt($credentials, $request->has('remember')) && $this->auth->user()->role->alias == 'admin') {
+            return redirect()->intended(route('admin.dashboard'));                                     
         }
 
         return redirect()->route('admin.login');

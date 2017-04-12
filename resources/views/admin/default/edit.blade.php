@@ -7,7 +7,11 @@
 @section('content')
     <div class="row">
         <section class="col-lg-12">
-
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs box-tools">
+                    <li class="active"><a href="{{ route($modelName.'.edit', $defaultModel->id) }}">Edit</a></li>
+                    <li class="pull-right"><a href="{{ route($modelName.'.index') }}" class="btn btn-box-tool" data-toggle="tooltip" title="Back to list" data-widget="chat-pane-toggle" data-original-title="Back to list"><i class="fa fa-arrow-left"></i> Back to list</a></li>
+                </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">
                             {{ Form::model($defaultModel, array('route' => array($modelName.'.update', $defaultModel->id), 'class' => 'form-horizontal', 'method' => 'PUT')) }}
