@@ -2,7 +2,7 @@
 
 @section('title', 'Users - Details #' . $user->id)
 
-@section('content_header', 'Users <small>user details</small>')
+@section('content_header', 'Users - Details #' . $user->id)
 
 @section('content')
     <div class="row">

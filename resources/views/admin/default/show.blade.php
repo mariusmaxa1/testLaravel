@@ -43,7 +43,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <dl class="dl-horizontal">
-                                    <dt>Adresa spital</dt>
+                                    <dt>Adresa</dt>
                                     <dd>{{ $defaultModel->address }}</dd>
                                 </dl>
                             </div>

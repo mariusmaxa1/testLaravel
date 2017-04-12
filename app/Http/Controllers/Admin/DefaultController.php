@@ -279,7 +279,7 @@ class DefaultController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreDefaultRequest $request, $id)
     {
         $routeName =  Route::currentRouteName();
         if ($routeName == 'dentists.update') {

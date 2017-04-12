@@ -9,6 +9,7 @@ use App\Role;
 use Notification;
 use App\SurveysSections;
 use App\SurveysQuestions;
+use App\SurveysAnswers;
 
 
 class SurveysController extends Controller
@@ -394,6 +395,59 @@ class SurveysController extends Controller
             $question->save();
             Notification::success('Sectiune dezactivata cu succes.');
         }
+
+        return redirect()->back();
+    }
+    
+    public function editAnswers($id, $questionId)
+    {
+        $survey = Surveys::findOrFail($id);
+        
+        $sections = $survey->sections; 
+        
+        $question = SurveysQuestions::findOrFail($questionId);
+        
+        $answers = SurveysAnswers::where('question_id', $questionId)->get();
+        
+        return view('admin.surveys.answers.index', [
+            'survey' => $survey,
+            'sections' => $sections,
+            'question' => $question,
+            'answers' => $answers
+        ]);
+    }
+    
+    public function updateAnswers(Request $request, $id, $questionId)
+    {
+        $survey = Surveys::findOrFail($id);
+        
+        $question = SurveysQuestions::findOrFail($questionId);
+        
+        $answers = SurveysAnswers::where('question_id', $questionId)->first();
+
+        $answers = new SurveysAnswers([
+            'name' => $request->get('name'),
+            'question_id' => $questionId,
+            'order' => $request->get('order'),
+        ]);
+
+        $answers->save();
+        
+
+        Notification::success("Raspuns adaugat cu succes.");
+
+        return redirect()->route('admin.surveys.questions.answers.edit', [$survey->id, $question->id]);
+    }
+    
+    public function destroyAnswers($id, $questionId, $answerId)
+    {
+        $survey = Surveys::findOrFail($id);
+        
+        $answers = SurveysAnswers::findOrFail($answerId);
+        
+        $answers->delete();
+
+        Notification::success('Raspunsul a fost stersa cu succes.');
 
         return redirect()->back();
     }

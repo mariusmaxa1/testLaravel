@@ -2,7 +2,7 @@
 
 @section('title', 'Users - Edit #' . $user->id)
 
-@section('content_header', 'Users <small>edit user</small>')
+@section('content_header', 'Users - Edit #' . $user->id)
 
 @section('content')
     <div class="row">
@@ -50,6 +50,18 @@
                                 <label for="inputNewPassword" class="col-sm-2 control-label">New password</label>
                                 <div class="col-sm-10">
                                     <input name="new_password" type="password" type="text" class="form-control" id="inputNewPassword">
+                                </div>
+                            </div>
+                             <div class="form-group @if($errors->has('active')) has-error @endif">
+                                <label class="col-sm-2 control-label"></label>
+                                <div class="col-sm-10">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input name="active" type="hidden" value="0">
+                                            <input name="active" type="checkbox" value="1" @if(old('active', $user->active) == '1') checked @endif>
+                                            Active
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                             <hr>

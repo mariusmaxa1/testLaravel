@@ -38,7 +38,7 @@ class Admin
                 return redirect()->route('admin.login');
             }
         } else {
-            if ($this->auth->user()->role_id != 9) {
+            if ($this->auth->user()->role->alias != 'admin') {
                 return response('Unauthorized.', 401);
             }
         }
