@@ -303,6 +303,33 @@ Route::group(['prefix' => 'profil', 'namespace' => 'Front'], function () {
             '_active_menu' => 'dashboard'
         ]);
         
+        
+        Route::get('/profil', [
+            'as' => 'default.profil.edit',
+            'uses' => 'ProfileController@edit',
+            '_active_menu' => 'profile'
+        ]);
+        
+        
+        Route::get('/descriere', [
+            'as' => 'default.description.edit',
+            'uses' => 'DescriptionController@edit',
+            '_active_menu' => 'profile'
+        ]);
+               
+        Route::get('/programari', [
+            'as' => 'default.appointments.edit',
+            'uses' => 'AppointmentsController@edit',
+            '_active_menu' => 'profile'
+        ]);
+        
+        
+        Route::get('/progra-de-lucru', [
+            'as' => 'default.workProgram.edit',
+            'uses' => 'WorkProgramController@edit',
+            '_active_menu' => 'profile'
+        ]);
+
 
     });
     

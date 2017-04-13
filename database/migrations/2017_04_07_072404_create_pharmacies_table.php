@@ -20,6 +20,8 @@ class CreatePharmaciesTable extends Migration
             $table->string('county');
             $table->string('city');
             $table->string('address');
+            $table->string('latitude');
+            $table->string('longitude');
             $table->string('phone1');
             $table->string('phone2')->nullable();
             $table->string('phone3')->nullable();

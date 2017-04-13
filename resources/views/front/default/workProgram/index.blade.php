@@ -2,6 +2,6 @@
 @section('title', 'Dashboard')
 @section('right_content')
 
-    <h1>Dashboard {{$rolename}}</h1>
+    <h1>Program de lucru</h1>
     <hr />
 @endsection
