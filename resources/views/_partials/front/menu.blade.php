@@ -3,7 +3,7 @@
 <div class="list-group">
     <a href="{{ route('hospital.dashboard.index') }}" @if(isset($_active_menu) && $_active_menu == 'dashboard') class="list-group-item active" @else class="list-group-item" @endif> Dashboard </a>
     <a href="{{ route('hospital.information.index') }}" @if(isset($_active_menu) && $_active_menu == 'information') class="list-group-item active" @else class="list-group-item" @endif> Informații spital </a>
-    <a href="{{ route('hospital.description.index') }}" @if(isset($_active_menu) && $_active_menu == 'description') class="list-group-item active" @else class="list-group-item" @endif> Descriere spital </a>
+    <a href="{{ route('hospital.description.edit') }}" @if(isset($_active_menu) && $_active_menu == 'description') class="list-group-item active" @else class="list-group-item" @endif> Descriere spital </a>
     <a href="{{ route('hospital.manager.index') }}" @if(isset($_active_menu) && $_active_menu == 'manager') class="list-group-item active" @else class="list-group-item" @endif class="list-group-item"> Cuvant manager </a>
     <a href="{{ route('hospital.speciality.index') }}" @if(isset($_active_menu) && $_active_menu == 'speciality') class="list-group-item active" @else class="list-group-item" @endif> Specialitati spital </a>
     <a href="{{ route('hospital.ambulatory.index') }}" @if(isset($_active_menu) && $_active_menu == 'ambulatory') class="list-group-item active" @else class="list-group-item" @endif> Ambulatoriu spital </a>

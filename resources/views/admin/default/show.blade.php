@@ -1,8 +1,8 @@
 @extends('admin.app')
 
-@section('title', $title. ' - Detalii #' . $defaultModel->id)
+@section('title', $modelName. ' - Detalii #' . $defaultModel->id)
 
-@section('content_header', $title)
+@section('content_header', $modelName)
 
 @section('content')
     <div class="row">

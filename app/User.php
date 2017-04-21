@@ -47,4 +47,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\UsersSocial');
     }
+    
+    public function entities()
+    {
+        return $this->belongsToMany('App\Entities', 'users_entities', 'user_id', 'entity_id');
+    }
 }

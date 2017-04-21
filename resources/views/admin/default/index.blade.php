@@ -1,15 +1,15 @@
 @extends('admin.app')
 
-@section('title', $title. ' - Lista')
+@section('title', $modelName. ' - Lista')
 
-@section('content_header', $title)
+@section('content_header', $modelName)
 
 @section('content')
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">{{ $title }} </h3>
+                    <h3 class="box-title">{{ $defaultModel['name'] }} </h3>
                     <div class="box-tools">
                         <a href="{{ route($modelName.'.create') }}" class="btn btn-box-tool'dentists.create pull-right" data-toggle="tooltip" title="Create" data-widget="chat-pane-toggle" data-original-title="Create"><i class="fa fa-plus"></i> Create</a>                                            
                         <form class="form-" method="GET" action="{{ route($modelName.'.index') }}">

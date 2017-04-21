@@ -1,8 +1,8 @@
 @extends('admin.app')
 
-@section('title', $title .' - editare')
+@section('title', $modelName .' - editare')
 
-@section('content_header', $title)
+@section('content_header', $modelName)
 
 @section('content')
     <div class="row">

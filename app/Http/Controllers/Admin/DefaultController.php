@@ -3,13 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Dentists;
-use App\Pharmacies;
-use App\Doctors;
-use App\FamilyDoctors;
-use App\PrivateClinics;
-use App\PrivateAmbulances;
-use App\Laboratories;
+use App\Helpers\Helper;
+use App\Entities;
+use App\EntitiesTypes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Requests\Admin\StoreDefaultRequest;
@@ -39,38 +35,21 @@ class DefaultController extends Controller
         if ($request->has('sort_order') && in_array($request->get('sort_order'), ['asc', 'desc'])) {
             $sortOrder = $request->get('sort_order');
         }
+        
         $routeName =  Route::currentRouteName();
-        if ($routeName == 'dentists.index') {
-            $title = 'Stomatologi';
-            $defaultModel = Dentists::orderBy($sortBy, $sortOrder);
-        }
-        if ($routeName == 'doctors.index') {
-            $title = 'Medici specialisti';
-            $defaultModel = Doctors::orderBy($sortBy, $sortOrder);
-        }
-        if ($routeName == 'pharmacies.index') {
-            $title = 'Farmacii';
-            $defaultModel = Pharmacies::orderBy($sortBy, $sortOrder);
-        }
-        if ($routeName == 'familyDoctors.index') {
-            $title = 'Medici de familie';
-            $defaultModel = FamilyDoctors::orderBy($sortBy, $sortOrder);
-        }
-        if ($routeName == 'privateClinics.index') {
-            $title = 'Clinci private';
-            $defaultModel = PrivateClinics::orderBy($sortBy, $sortOrder);
-        }
-        if ($routeName == 'privateAmbulances.index') {
-            $title = 'Ambulanta privata';
-            $defaultModel = PrivateAmbulances::orderBy($sortBy, $sortOrder);
-        }
-        if ($routeName == 'laboratories.index') {
-            $title = 'Laboratoare de analiza';
-            $defaultModel = Laboratories::orderBy($sortBy, $sortOrder);
+        
+        $entityTypeAndId = Helper::getEntityTypeAndId($routeName);
+        
+        if(!$entityTypeAndId){
+            
+            return "notok";                     
         }
         
-        //$defaultModel = Pharmacies::orderBy($sortBy, $sortOrder);
+        $defaultModel = Entities::getEntities($entityTypeAndId[1]);
+       
 
+        $defaultModel = $defaultModel->orderBy($sortBy, $sortOrder);   
+       
         if (!is_null($query)) {
             $defaultModel = $defaultModel
                 ->where('name', 'like', '%'.$query.'%')
@@ -83,15 +62,11 @@ class DefaultController extends Controller
         if (!is_null($query)) {
             $defaultModel->appends('query', $query);
         }
-        
-        $modelName =  explode(".", $routeName); 
-        $modelName = $modelName[0];
-
+       
         return view('admin.default.index', [
-            'modelName' => $modelName,
+            'modelName' => $entityTypeAndId[0],
             'defaultModel' => $defaultModel,
             'query' => $query,
-            'title' => $title
         ]);
     }
 
@@ -103,36 +78,18 @@ class DefaultController extends Controller
     public function create()
     {
         $routeName =  Route::currentRouteName();
-        if ($routeName == 'dentists.create') {
-            $title = 'Stomatologi';
-        }
-        if ($routeName == 'doctors.create') {
-            $title = 'Medici specialisti';
-        }
-        if ($routeName == 'pharmacies.create') {
-            $title = 'Farmacii';
-        }
-        if ($routeName == 'familyDoctors.create') {
-            $title = 'Medici de familie';
-        }
-        if ($routeName == 'privateClinics.create') {
-            $title = 'Clinci privatecreate';
-        }
-        if ($routeName == 'privateAmbulances.create') {
-            $title = 'Ambulanta privata';
-        }
-        if ($routeName == 'laboratories.create') {
-            $title = 'Laboratoare de analiza';
-        }
         
-        $modelName =  explode(".", $routeName); 
-        $modelName = $modelName[0];
+        $entityTypeAndId = Helper::getEntityTypeAndId($routeName);
+        
+        if(!$entityTypeAndId){
+            
+            return "notok";                     
+        }
         
         
         return view('admin.default.create',[
             'routeName' => $routeName,
-            'modelName' => $modelName,
-            'title'  => $title
+            'modelName' => $entityTypeAndId[0],
             ]);
     }
 
@@ -145,34 +102,37 @@ class DefaultController extends Controller
     public function store(StoreDefaultRequest $request)
     {
         $routeName =  Route::currentRouteName();
-        if ($routeName == 'dentists.store') {
-            Dentists::create($request->all());
-        }
-        if ($routeName == 'doctors.store') {
-            Doctors::create($request->all());
-        }
-        if ($routeName == 'pharmacies.store') {
-            Pharmacies::create($request->all());
-        }
-        if ($routeName == 'familyDoctors.store') {
-            FamilyDoctors::create($request->all());
-        }
-        if ($routeName == 'privateClinics.store') {
-           PrivateClinics::create($request->all());
-        }
-        if ($routeName == 'privateAmbulances.store') {
-            PrivateAmbulances::create($request->all());
-        }
-        if ($routeName == 'laboratories.store') {
-            Laboratories::create($request->all());
+        
+        $entityTypeAndId = Helper::getEntityTypeAndId($routeName);
+
+        if(!$entityTypeAndId){
+            
+            return "notok";                     
         }
         
-        $modelName =  explode(".", $routeName); 
-        $modelName = $modelName[0];
+
+        $defaultModel = new Entities([
+            'entity_type_id' => $entityTypeAndId[1],
+            'name' => $request->get('name'),
+            'county' => $request->get('county'),
+            'city' => $request->get('city'),
+            'address' => $request->get('address'),
+            'latitude' => $request->get('latitude'),
+            'longitude' => $request->get('longitude'),
+            'phone1' => $request->get('phone1'),
+            'phone2' => $request->get('phone2'),
+            'phone3' => $request->get('phone3'),
+            'fax' => $request->get('fax'),
+            'website' => $request->get('website'),
+            'mail' => $request->get('mail'),
+            'active' => (bool) $request->get('active'),          
+        ]);
+        
+        $defaultModel->save();
 
         Notification::success('Succes.');
 
-        return redirect()->route($modelName.'.index');
+        return redirect()->route($entityTypeAndId[0].'.index');
     }
 
     /**
@@ -184,42 +144,18 @@ class DefaultController extends Controller
     public function show($id)
     {   
         $routeName =  Route::currentRouteName();
-        if ($routeName == 'dentists.show') {
-            $title = 'Stomatologi';
-            $defaultModel = Dentists::findOrFail($id);
-        }
-        if ($routeName == 'doctors.show') {
-            $title = 'Medici specialisti';
-            $defaultModel = Doctors::findOrFail($id);
-        }
-        if ($routeName == 'pharmacies.show') {
-            $title = 'Farmacii';
-            $defaultModel = Pharmacies::findOrFail($id);
-        }
-        if ($routeName == 'familyDoctors.show') {
-            $title = 'Medici de familie';
-            $defaultModel = FamilyDoctors::findOrFail($id);
-        }
-        if ($routeName == 'privateClinics.show') {
-            $title = 'Clinci private';
-            $defaultModel = PrivateClinics::findOrFail($id);
-        }
-        if ($routeName == 'privateAmbulances.show') {
-            $title = 'Ambulanta privata';
-            $defaultModel = PrivateAmbulances::findOrFail($id);
-        }
-        if ($routeName == 'laboratories.show') {
-            $title = 'Laboratoare de analiza';
-            $defaultModel = Laboratories::findOrFail($id);
+        $entityTypeAndId = Helper::getEntityTypeAndId($routeName);
+        
+        if(!$entityTypeAndId){
+            
+            return "notok";                     
         }
         
-        $modelName =  explode(".", $routeName); 
-        $modelName = $modelName[0];
+        $defaultModel = Entities::findOrFail($id);
         
         return view('admin.default.show', [
             'defaultModel' => $defaultModel,
-            'modelName' => $modelName,
-            'title' => $title,
+            'modelName' => $entityTypeAndId[0],
         ]);
     }
 
@@ -232,43 +168,19 @@ class DefaultController extends Controller
     public function edit($id)
     {
         $routeName =  Route::currentRouteName();
-        if ($routeName == 'dentists.edit') {
-            $title = 'Stomatologi';
-            $defaultModel = Dentists::findOrFail($id);
-        }
-        if ($routeName == 'doctors.edit') {
-            $title = 'Medici specialisti';
-            $defaultModel = Doctors::findOrFail($id);
-        }
-        if ($routeName == 'pharmacies.destroy') {
-            $title = 'Farmacii';
-            $defaultModel = Pharmacies::findOrFail($id);
-        }
-        if ($routeName == 'familyDoctors.edit') {
-            $title = 'Medici de familie';
-            $defaultModel = FamilyDoctors::findOrFail($id);
-        }
-        if ($routeName == 'privateClinics.edit') {
-            $title = 'Clinci private';
-            $defaultModel = PrivateClinics::findOrFail($id);
-        }
-        if ($routeName == 'privateAmbulances.edit') {
-            $title = 'Ambulanta privata';
-            $defaultModel = PrivateAmbulances::findOrFail($id);
-        }
-        if ($routeName == 'laboratories.edit') {
-            $title = 'Laboratoare de analiza';
-            $defaultModel = Laboratories::findOrFail($id);
+        $entityTypeAndId = Helper::getEntityTypeAndId($routeName);
+        
+        if(!$entityTypeAndId){
+            
+            return "notok";                     
         }
         
-        $modelName =  explode(".", $routeName); 
-        $modelName = $modelName[0];
+        $defaultModel = Entities::findOrFail($id);
         
         return view('admin.default.edit', [
             'defaultModel' => $defaultModel,
             'routeName' => $routeName,
-            'modelName' => $modelName,
-            'title' => $title,
+            'modelName' => $entityTypeAndId[0],
         ]);
     }
 
@@ -282,49 +194,37 @@ class DefaultController extends Controller
     public function update(StoreDefaultRequest $request, $id)
     {
         $routeName =  Route::currentRouteName();
-        if ($routeName == 'dentists.update') {
-            $title = 'Stomatologi';
-            $defaultModel = Dentists::findOrFail($id);
-            $defaultModel = $defaultModel->update($request->all());
-        }
-        if ($routeName == 'doctors.update') {
-            $title = 'Medici specialisti';
-            $defaultModel = Doctors::findOrFail($id);
-            $defaultModel = $defaultModel->update($request->all());
-        }
-        if ($routeName == 'pharmacies.update') {
-            $title = 'Farmacii';
-            $defaultModel = Pharmacies::findOrFail($id);
-            $defaultModel = $defaultModel->update($request->all());
-        }
-        if ($routeName == 'familyDoctors.update') {
-            $title = 'Medici de familie';
-            $defaultModel = FamilyDoctors::findOrFail($id);
-            $defaultModel = $defaultModel->update($request->all());
-        }
-        if ($routeName == 'privateClinics.update') {
-            $title = 'Clinci private';
-            $defaultModel = PrivateClinics::findOrFail($id);
-            $defaultModel = $defaultModel->update($request->all());
-        }
-        if ($routeName == 'privateAmbulances.update') {
-            $title = 'Ambulanta privata';
-            $defaultModel = PrivateAmbulances::findOrFail($id);
-            $defaultModel = $defaultModel->update($request->all());
-        }
-        if ($routeName == 'laboratories.update') {
-            $title = 'Laboratoare de analiza';
-            $defaultModel = Laboratories::findOrFail($id);
-            $defaultModel = $defaultModel->update($request->all());
-        }
+        
+        $entityTypeAndId = Helper::getEntityTypeAndId($routeName);
 
+        if(!$entityTypeAndId){
+            
+            return "notok";                     
+        }
+        $defaultModel = Entities::findOrFail($id);
 
-        $modelName =  explode(".", $routeName); 
-        $modelName = $modelName[0];
+        $defaultModel->fill([
+            'entity_type_id' => $entityTypeAndId[1],
+            'name' => $request->get('name'),
+            'county' => $request->get('county'),
+            'city' => $request->get('city'),
+            'address' => $request->get('address'),
+            'latitude' => $request->get('latitude'),
+            'longitude' => $request->get('longitude'),
+            'phone1' => $request->get('phone1'),
+            'phone2' => $request->get('phone2'),
+            'phone3' => $request->get('phone3'),
+            'fax' => $request->get('fax'),
+            'website' => $request->get('website'),
+            'mail' => $request->get('mail'),
+            'active' => (bool) $request->get('active'),          
+        ]);
+        
+        $defaultModel->save();
 
         Notification::success('Succes.');
 
-        return redirect()->route($modelName.'.index');
+        return redirect()->route($entityTypeAndId[0].'.index');
     }
 
     /**
@@ -336,77 +236,27 @@ class DefaultController extends Controller
     public function destroy($id)
     {
         $routeName =  Route::currentRouteName();
-        if ($routeName == 'dentists.destroy') {
-            $title = 'Stomatologi';
-            $defaultModel = Dentists::findOrFail($id);
-        }
-        if ($routeName == 'doctors.destroy') {
-            $title = 'Medici specialisti';
-            $defaultModel = Doctors::findOrFail($id);
-        }
-        if ($routeName == 'pharmacies.destroy') {
-            $title = 'Farmacii';
-            $defaultModel = Pharmacies::findOrFail($id);
-        }
-        if ($routeName == 'familyDoctors.destroy') {
-            $title = 'Medici de familie';
-            $defaultModel = FamilyDoctors::findOrFail($id);
-        }
-        if ($routeName == 'privateClinics.destroy') {
-            $title = 'Clinci private';
-            $defaultModel = PrivateClinics::findOrFail($id);
-        }
-        if ($routeName == 'privateAmbulances.destroy') {
-            $title = 'Ambulanta privata';
-            $defaultModel = PrivateAmbulances::findOrFail($id);
-        }
-        if ($routeName == 'laboratories.destroy') {
-            $title = 'Laboratoare de analiza';
-            $defaultModel = Laboratories::findOrFail($id);
-        }
+        $defaultModel = Entities::findOrFail($id);
         
         $defaultModel->delete();
 
-        $modelName =  explode(".", $routeName); 
-        $modelName = $modelName[0];
+       $entityTypeAndId = Helper::getEntityTypeAndId($routeName);
+        
+        if(!$entityTypeAndId){
+            
+            return "notok";                     
+        }
+        
 
         Notification::success('Succes.');
 
-        return redirect()->route($modelName.'.index');
+        return redirect()->route($entityTypeAndId[0].'.index');
       
     }
     
     public function activate($modelName, $id)
-    {
-        
-        if ($modelName == 'dentists') {
-            $title = 'Stomatologi';
-            $defaultModel = Dentists::findOrFail($id);
-        }
-        if ($modelName == 'doctors') {
-            $title = 'Medici specialisti';
-            $defaultModel = Doctors::findOrFail($id);
-        }
-        if ($modelName == 'pharmacies') {
-            $title = 'Farmacii';
-            $defaultModel = Pharmacies::findOrFail($id);
-        }
-        if ($modelName == 'familyDoctors') {
-            $title = 'Medici de familie';
-            $defaultModel = FamilyDoctors::findOrFail($id);
-        }
-        if ($modelName == 'privateClinics') {
-            $title = 'Clinci private';
-            $defaultModel = PrivateClinics::findOrFail($id);
-        }
-        if ($modelName == 'privateAmbulances') {
-            $title = 'Ambulanta privata';
-            $defaultModel = PrivateAmbulances::findOrFail($id);
-        }
-        if ($modelName == 'laboratories') {
-            $title = 'Laboratoare de analiza';
-            $defaultModel = Laboratories::findOrFail($id);
-        }
+    {    
+        $defaultModel = Entities::findOrFail($id);  
       
         if ($defaultModel->active == 0) {
             $defaultModel->active = true;
@@ -418,35 +268,8 @@ class DefaultController extends Controller
     }
 
     public function deactivate($modelName, $id)
-    {
-        if ($modelName == 'dentists') {
-            $title = 'Stomatologi';
-            $defaultModel = Dentists::findOrFail($id);
-        }
-        if ($modelName == 'doctors') {
-            $title = 'Medici specialisti';
-            $defaultModel = Doctors::findOrFail($id);
-        }
-        if ($modelName == 'pharmacies') {
-            $title = 'Farmacii';
-            $defaultModel = Pharmacies::findOrFail($id);
-        }
-        if ($modelName == 'familyDoctors') {
-            $title = 'Medici de familie';
-            $defaultModel = FamilyDoctors::findOrFail($id);
-        }
-        if ($modelName == 'privateClinics') {
-            $title = 'Clinci private';
-            $defaultModel = PrivateClinics::findOrFail($id);
-        }
-        if ($modelName == 'privateAmbulances') {
-            $title = 'Ambulanta privata';
-            $defaultModel = PrivateAmbulances::findOrFail($id);
-        }
-        if ($modelName == 'laboratories') {
-            $title = 'Laboratoare de analiza';
-            $defaultModel = Laboratories::findOrFail($id);
-        }
+    {        
+        $defaultModel = Entities::findOrFail($id);
 
         if ($defaultModel->active == 1) {
             $defaultModel->active = false;
